@@ -218,3 +218,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Bill Daily local outputs and credentials
+output/
+*.key
+*.pem
+secrets/
+
+# evidence/、data/、docs/ 必须纳入版本控制，不得忽略。

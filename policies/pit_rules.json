@@ -1,0 +1,159 @@
+{
+  "schema_version": "1.0.0",
+  "policy_status": "frozen_before_implementation_and_test_results",
+  "report_trigger": "T 日 08:30",
+  "information_cutoff": "T-1 日 23:59",
+  "available_at_date_convention": "字段级 available_at 中的 T 指该字段数据所属交易日；报告触发与信息截止语境中的 T 指报告触发交易日。",
+  "selection_rule": "仅使用可得时点不晚于报告信息截止时点的数据，不得仅按数据所属日期判断可用性。",
+  "timing_conclusion": "08:30 触发时，当日央行公开市场操作、SHIBOR、DR 利率均尚未发布，只能使用 T-1 日及之前已公开且可得时点不晚于信息截止时点的数据。",
+  "global_prohibited_operations": [
+    "bfill（后向填充）：禁止使用未来观测值填充历史缺失值。",
+    "禁止使用 available_at 晚于报告信息截止时点的字段值。",
+    "禁止将保守假设的披露时点表述为已确认事实。"
+  ],
+  "fields": [
+    {
+      "field": "承兑量",
+      "source_institution": "上海票据交易所（SHEX）",
+      "definition": "数据所属交易日的票据承兑量，日频聚合口径。",
+      "available_at": "T+1 日 09:00",
+      "disclosure_time_confirmed": false,
+      "usable_for_t_minus_1_cutoff": false,
+      "latest_usable_data_date_for_t_report": "T-2",
+      "note": "票交所票据端数据披露时点尚未最终确认；T+1 日 09:00 仅为保守假设，不是已确认事实。因此 T-1 日数据在 T 日 08:30 触发时按不可用处理。",
+      "prohibited_operations": ["bfill（后向填充）", "使用信息截止时点后才可得的数据"]
+    },
+    {
+      "field": "贴现量",
+      "source_institution": "上海票据交易所（SHEX）",
+      "definition": "数据所属交易日的票据贴现量，日频聚合口径。",
+      "available_at": "T+1 日 09:00",
+      "disclosure_time_confirmed": false,
+      "usable_for_t_minus_1_cutoff": false,
+      "latest_usable_data_date_for_t_report": "T-2",
+      "note": "票交所票据端数据披露时点尚未最终确认；T+1 日 09:00 仅为保守假设，不是已确认事实。因此 T-1 日数据在 T 日 08:30 触发时按不可用处理。",
+      "prohibited_operations": ["bfill（后向填充）", "使用信息截止时点后才可得的数据"]
+    },
+    {
+      "field": "交易量",
+      "source_institution": "上海票据交易所（SHEX）",
+      "definition": "数据所属交易日的票据交易量，日频聚合口径。",
+      "available_at": "T+1 日 09:00",
+      "disclosure_time_confirmed": false,
+      "latest_usable_data_date_for_t_report": "T-2",
+      "usable_for_t_minus_1_cutoff": false,
+      "note": "票交所票据端数据披露时点尚未最终确认；T+1 日 09:00 仅为保守假设，不是已确认事实。因此 T-1 日数据在 T 日 08:30 触发时按不可用处理。",
+      "prohibited_operations": ["bfill（后向填充）", "使用信息截止时点后才可得的数据"]
+    },
+    {
+      "field": "票据利率（跨年票）",
+      "source_institution": "上海票据交易所（SHEX）",
+      "definition": "数据所属交易日的跨年票据利率，与普通票利率分列，日频口径。",
+      "available_at": "T+1 日 09:00",
+      "disclosure_time_confirmed": false,
+      "usable_for_t_minus_1_cutoff": false,
+      "latest_usable_data_date_for_t_report": "T-2",
+      "note": "票交所票据端数据披露时点尚未最终确认；T+1 日 09:00 仅为保守假设，不是已确认事实。因此 T-1 日数据在 T 日 08:30 触发时按不可用处理。",
+      "prohibited_operations": ["bfill（后向填充）", "使用信息截止时点后才可得的数据"]
+    },
+    {
+      "field": "票据利率（普通票）",
+      "source_institution": "上海票据交易所（SHEX）",
+      "definition": "数据所属交易日的普通票据利率，与跨年票利率分列，日频口径。",
+      "available_at": "T+1 日 09:00",
+      "disclosure_time_confirmed": false,
+      "usable_for_t_minus_1_cutoff": false,
+      "latest_usable_data_date_for_t_report": "T-2",
+      "note": "票交所票据端数据披露时点尚未最终确认；T+1 日 09:00 仅为保守假设，不是已确认事实。因此 T-1 日数据在 T 日 08:30 触发时按不可用处理。",
+      "prohibited_operations": ["bfill（后向填充）", "使用信息截止时点后才可得的数据"]
+    },
+    {
+      "field": "央行公开市场操作（投放）",
+      "source_institution": "中国人民银行",
+      "definition": "数据所属交易日公开市场逆回购投放量。",
+      "available_at": "T 日约 09:20",
+      "disclosure_time_confirmed": true,
+      "usable_for_t_minus_1_cutoff": true,
+      "latest_usable_data_date_for_t_report": "T-1",
+      "note": "依据已知发布时点：央行公开市场操作约 09:20 公告。T-1 日数据在信息截止时点前已可得；T 日数据在 08:30 触发时不可得。",
+      "prohibited_operations": ["bfill（后向填充）", "使用信息截止时点后才可得的数据"]
+    },
+    {
+      "field": "央行公开市场操作（到期）",
+      "source_institution": "中国人民银行",
+      "definition": "数据所属交易日公开市场逆回购到期量。",
+      "available_at": "T 日约 09:20",
+      "disclosure_time_confirmed": true,
+      "usable_for_t_minus_1_cutoff": true,
+      "latest_usable_data_date_for_t_report": "T-1",
+      "note": "依据已知发布时点：央行公开市场操作约 09:20 公告。T-1 日数据在信息截止时点前已可得；T 日数据在 08:30 触发时不可得。",
+      "prohibited_operations": ["bfill（后向填充）", "使用信息截止时点后才可得的数据"]
+    },
+    {
+      "field": "央行公开市场操作（净投放）",
+      "source_institution": "中国人民银行",
+      "definition": "数据所属交易日逆回购投放量减逆回购到期量，由确定性代码计算。",
+      "available_at": "T 日约 09:20",
+      "disclosure_time_confirmed": true,
+      "usable_for_t_minus_1_cutoff": true,
+      "latest_usable_data_date_for_t_report": "T-1",
+      "note": "依据已知发布时点：央行公开市场操作约 09:20 公告。净投放依赖同时点可得的投放与到期数据；T 日数据在 08:30 触发时不可得。",
+      "prohibited_operations": ["bfill（后向填充）", "使用信息截止时点后才可得的数据", "使用不同可得时点的投放与到期数据直接计算"]
+    },
+    {
+      "field": "SHIBOR 隔夜",
+      "source_institution": "全国银行间同业拆借中心 / CFETS",
+      "definition": "数据所属交易日发布的隔夜上海银行间同业拆放利率。",
+      "available_at": "T 日约 11:00",
+      "disclosure_time_confirmed": true,
+      "usable_for_t_minus_1_cutoff": true,
+      "latest_usable_data_date_for_t_report": "T-1",
+      "note": "依据已知发布时点：SHIBOR 约 11:00 发布。T-1 日数据在信息截止时点前已可得；T 日数据在 08:30 触发时不可得。",
+      "prohibited_operations": ["bfill（后向填充）", "使用信息截止时点后才可得的数据"]
+    },
+    {
+      "field": "DR001",
+      "source_institution": "全国银行间同业拆借中心 / CFETS",
+      "definition": "数据所属交易日隔夜存款类机构质押式回购加权利率。",
+      "available_at": "T 日约 18:00",
+      "disclosure_time_confirmed": true,
+      "usable_for_t_minus_1_cutoff": true,
+      "latest_usable_data_date_for_t_report": "T-1",
+      "note": "依据已知发布时点：DR 利率约 18:00 公布。T-1 日数据在信息截止时点前已可得；T 日数据在 08:30 触发时不可得。",
+      "prohibited_operations": ["bfill（后向填充）", "使用信息截止时点后才可得的数据"]
+    },
+    {
+      "field": "DR007",
+      "source_institution": "全国银行间同业拆借中心 / CFETS",
+      "definition": "数据所属交易日 7 天期存款类机构质押式回购加权利率。",
+      "available_at": "T 日约 18:00",
+      "disclosure_time_confirmed": true,
+      "usable_for_t_minus_1_cutoff": true,
+      "latest_usable_data_date_for_t_report": "T-1",
+      "note": "依据已知发布时点：DR 利率约 18:00 公布。T-1 日数据在信息截止时点前已可得；T 日数据在 08:30 触发时不可得。",
+      "prohibited_operations": ["bfill（后向填充）", "使用信息截止时点后才可得的数据"]
+    },
+    {
+      "field": "R007",
+      "source_institution": "全国银行间同业拆借中心 / CFETS",
+      "definition": "数据所属交易日 7 天期银行间质押式回购加权利率。",
+      "available_at": "T 日约 18:00",
+      "disclosure_time_confirmed": false,
+      "usable_for_t_minus_1_cutoff": true,
+      "latest_usable_data_date_for_t_report": "T-1",
+      "note": "暂按与 DR 利率相同的日终披露口径登记为约 18:00；用户仅明确给出 DR 利率发布时点，R007 的具体披露时点仍待确认，不得表述为已确认事实。",
+      "prohibited_operations": ["bfill（后向填充）", "使用信息截止时点后才可得的数据"]
+    },
+    {
+      "field": "NCD 收益率曲线",
+      "source_institution": "中国外汇交易中心（CFETS）",
+      "definition": "NCD 二级市场收益率与收益率曲线，仅作为资金面参照。",
+      "available_at": "待确认（确认前按不可用于本报告处理）",
+      "disclosure_time_confirmed": false,
+      "usable_for_t_minus_1_cutoff": false,
+      "latest_usable_data_date_for_t_report": null,
+      "note": "尚未提供 NCD 二级市场收益率及收益率曲线的正式发布时点，不作已确认假设；披露时点确认并登记前不得投入使用，也不得通过其他字段推定其可得性。",
+      "prohibited_operations": ["bfill（后向填充）", "使用信息截止时点后才可得的数据", "在披露时点未确认时投入使用"]
+    }
+  ]
+}

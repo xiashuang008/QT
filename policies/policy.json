@@ -1,0 +1,93 @@
+{
+  "schema_version": "1.0.0",
+  "policy_status": "frozen_before_implementation_and_test_results",
+  "acceptance_thresholds": {
+    "data_freshness": {
+      "snapshot_date_must_equal": "expected_trading_day",
+      "max_missing_required_fields": 0
+    },
+    "numeric_consistency": {
+      "max_unmatched_narrative_numbers": 0,
+      "max_mismatched_narrative_numbers": 0,
+      "numeric_tolerance": 0,
+      "comparison_rule": "日评正文中的每个数字必须能在确定性计算结果中找到且相等"
+    },
+    "module_completeness": {
+      "required_modules": ["票据供给", "缺口分析", "票据利率", "资金面"],
+      "max_missing_modules": 0,
+      "max_numbers_outside_indicator_results": 0
+    },
+    "point_in_time_compliance": {
+      "information_cutoff": "T-1 日 23:59",
+      "max_fields_available_after_cutoff": 0
+    },
+    "recoverability": {
+      "must_resume_from_validated_checkpoint": true,
+      "max_repeated_completed_collection_tasks": 0,
+      "max_repeated_completed_calculation_tasks": 0
+    },
+    "verification_acceptance": {
+      "required_consecutive_passed_rounds": 2,
+      "same_candidate_only": true,
+      "reset_pass_count_when_candidate_changes": true
+    }
+  },
+  "revision_loop": {
+    "route": "S4 -> Orchestrator 修复任务包 -> S3",
+    "max_rounds": 2,
+    "round_count_scope": "每份报告累计，续跑不重置",
+    "on_limit_exceeded": "exhausted",
+    "exhaustion_is_acceptance": false
+  },
+  "execution_limits": {
+    "max_tool_calls_per_case": 100,
+    "max_total_duration_seconds_per_case": 1800,
+    "tool_call_count_scope": "同一案例 S0-S6 的全部工具调用累计，包含独立核验与修订回路，续跑不重置",
+    "duration_scope": "同一案例全部执行与修订回路的累计自然用时，续跑不重置",
+    "on_tool_call_limit_exceeded": "exhausted",
+    "on_duration_limit_exceeded": "exhausted",
+    "exhaustion_is_acceptance": false
+  },
+  "stop_results": {
+    "rejected": {
+      "label": "否决",
+      "meaning": "核验或策略检查给出明确否决，当前候选不得继续流转或发布。",
+      "acceptance_passed": false,
+      "publication_allowed": false
+    },
+    "blocked": {
+      "label": "阻断",
+      "meaning": "必需数据、有效检查点、工具能力或其他前置条件缺失，流程无法继续。",
+      "acceptance_passed": false,
+      "publication_allowed": false
+    },
+    "exhausted": {
+      "label": "耗尽",
+      "meaning": "修订回路轮次、工具调用次数或单案例总用时达到冻结上限。耗尽不等于验收通过。",
+      "acceptance_passed": false,
+      "publication_allowed": false
+    },
+    "stalled": {
+      "label": "停滞",
+      "meaning": "执行未产生可验证的状态推进，继续自动执行无法形成有效候选或消除未通过项。",
+      "acceptance_passed": false,
+      "publication_allowed": false
+    },
+    "user_stopped": {
+      "label": "用户停止",
+      "meaning": "用户主动停止当前案例，保留已核验检查点，不得继续自动执行或发布。",
+      "acceptance_passed": false,
+      "publication_allowed": false
+    }
+  },
+  "authorization_boundary": {
+    "numeric_acceptance_equals_publication_authorization": false,
+    "rule": "数值验收通过不等于获得发布授权。",
+    "publication_requires": [
+      "同一候选日评连续两轮核验通过",
+      "S5 人工明确批准发布"
+    ],
+    "automatic_publication_allowed": false,
+    "note": "验收状态、Orchestrator、生成方和核验方均不得代替人工授予发布授权。"
+  }
+}

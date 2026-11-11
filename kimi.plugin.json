@@ -1,0 +1,15 @@
+{
+  "name": "bill-daily",
+  "version": "0.1.0",
+  "description": "票据市场日评智能体工作流",
+  "commands": "./commands/",
+  "skills": "./skills/",
+  "agents": "./agents/",
+  "interface": {
+    "displayName": "Bill Market Daily Review",
+    "shortDescription": "可核验、需人工批准的票据市场日评工作流",
+    "longDescription": "提供日频四模块票据市场日评工作流；数值由确定性代码计算并逐项对账，生成方与核验方分离，发布前须人工批准；输出为研究参考而非报价指令。",
+    "developerName": "xiashuang008",
+    "defaultLocale": "zh-CN"
+  }
+}
