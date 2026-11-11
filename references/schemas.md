@@ -75,13 +75,14 @@
       "type": "object",
       "additionalProperties": {
         "type": "object",
-        "required": ["display_name", "value", "raw_value", "unit", "data_date"],
+        "required": ["display_name", "value", "raw_value", "unit", "data_date", "available_at"],
         "properties": {
           "display_name": {"type": "string"},
           "value": {},
           "raw_value": {"type": "string"},
           "unit": {"type": "string"},
           "data_date": {"type": "string", "format": "date"},
+          "available_at": {"type": "string", "format": "date-time"},
           "base_period": {"type": "string"},
           "source_fields": {"type": "array", "items": {"type": "string"}}
         }
