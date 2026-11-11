@@ -31,6 +31,7 @@
 | `references/` | 存放工作流所需的参考资料。 |
 | `runtime/dailyflow/` | 存放日评工作流的运行时代码。 |
 | `scripts/` | 存放项目辅助脚本。 |
+| `hooks/` | 存放仅用于事件留痕的 Kimi Code 生命周期钩子。 |
 | `tests/` | 存放项目测试代码。 |
 | `tests/fixtures/` | 存放测试使用的固定输入与夹具。 |
 | `prompts/` | 存放日评生成与核验提示词模板。 |

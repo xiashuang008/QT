@@ -5,6 +5,14 @@
   "commands": "./commands/",
   "skills": "./skills/",
   "agents": "./agents/",
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": "^Bash$",
+      "command": "python ./hooks/audit_event.py",
+      "timeout": 3
+    }
+  ],
   "interface": {
     "displayName": "Bill Market Daily Review",
     "shortDescription": "可核验、需人工批准的票据市场日评工作流",

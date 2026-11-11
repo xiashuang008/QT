@@ -6,6 +6,7 @@
 - `references/`：工作流参考资料。
 - `runtime/dailyflow/`：日评工作流运行时代码。
 - `scripts/`：辅助脚本。
+- `hooks/`：仅留痕的 Kimi Code 生命周期钩子。
 - `tests/`：测试代码；`tests/fixtures/` 存放测试夹具。
 - `prompts/`：提示词模板。
 - `policies/`：工作流策略与约束。
