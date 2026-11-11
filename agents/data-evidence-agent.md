@@ -33,7 +33,7 @@ Critic 分派、候选日评、指标结果 JSON、快照与 manifest、既有�
 
 ## 允许工具
 
-Read/Grep/Glob 用于读取与定位；Bash 仅用于确定性哈希和数值比对；Write 仅用于授权审查报告。
+Read/Grep/Glob 用于读取与定位；Bash 用于调用 `runtime/dailyflow/gates.py` 的 `check_numbers` 并执行确定性哈希核验，必须以代码返回的 JSON 判定为数值结论；Write 仅用于授权审查报告。
 
 ## 禁止事项
 

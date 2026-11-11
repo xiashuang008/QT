@@ -7,6 +7,7 @@ tools:
   - Write
   - Grep
   - Glob
+  - Bash
 subagents: []
 ---
 
@@ -32,7 +33,7 @@ Critic 分派、候选日评、任务授权、版本与批准状态证据、研�
 
 ## 允许工具
 
-Read/Grep/Glob 用于读取、定位和覆盖核对；Write 仅用于授权审查产物。不得使用工具修改候选或批准记录。
+Read/Grep/Glob 用于读取、定位和覆盖核对；Bash 用于调用 `runtime/dailyflow/gates.py` 的 `check_wording`，必须以代码返回的 JSON 判定为措辞与授权边界结论；Write 仅用于授权审查产物。不得使用工具修改候选或批准记录。
 
 ## 禁止事项
 

@@ -33,7 +33,7 @@ Critic 分派、候选日评、快照清单、`policies/pit_rules.json`、指标
 
 ## 允许工具
 
-Read/Grep/Glob 用于读取和定位；Bash 仅用于确定性时点比较；Write 仅用于授权审查产物。
+Read/Grep/Glob 用于读取和定位；Bash 用于调用 `runtime/dailyflow/gates.py` 的 `check_timing`，必须以代码返回的 JSON 判定为时点结论；Write 仅用于授权审查产物。
 
 ## 禁止事项
 

@@ -1,0 +1,31 @@
+{
+  "issues": [
+    {
+      "affected_artifacts": [
+        {
+          "location": "- 贴现量：80 亿元",
+          "path": "D:\\QT\\candidate.md"
+        }
+      ],
+      "check_type": "numbers",
+      "description": "正文数值与指标结果不一致：80",
+      "details": {
+        "actual": "80",
+        "difference": "5",
+        "expected": "75",
+        "location": "- 贴现量：80 亿元",
+        "metric": "discount_amount"
+      },
+      "evidence_required": [
+        "修复后的候选产物及对应确定性证据"
+      ],
+      "id": "numbers-19148f59f6e5",
+      "opened_round": 1,
+      "severity": "high",
+      "status": "open"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "task_id": "rejection-numbers",
+  "updated_at": "2026-11-11T15:59:48.967715+00:00"
+}

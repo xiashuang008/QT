@@ -1,0 +1,58 @@
+{
+  "artifacts": [
+    {
+      "kind": "snapshot_manifest",
+      "path": "D:\\QT\\output\\demo-daily-2026-11-11\\snapshots\\2026-11-11\\manifest.json",
+      "role": "data-agent",
+      "sha256": "eea199ee0383c3b6b07d4bcc5669239a5a61262a5449f267c23e43bb6275d8a6",
+      "verified": true
+    },
+    {
+      "kind": "data_report",
+      "path": "D:\\QT\\output\\demo-daily-2026-11-11\\rounds\\round-001\\generator\\data-agent.json",
+      "role": "data-agent",
+      "sha256": "3e433948cce4a3949c085e82c69b7c2b0ad3e35720e997dd813dd2b11ae2d439",
+      "verified": true
+    },
+    {
+      "kind": "timing_report",
+      "path": "D:\\QT\\output\\demo-daily-2026-11-11\\rounds\\round-001\\generator\\timing-agent.json",
+      "role": "timing-agent",
+      "sha256": "74b843411dbd37f585de5b13d35c4b8309d8a51a1b835e512acaa20e8e3a015f",
+      "verified": true
+    },
+    {
+      "kind": "metrics",
+      "path": "D:\\QT\\output\\demo-daily-2026-11-11\\rounds\\round-001\\generator\\metrics.json",
+      "role": "metrics-agent",
+      "sha256": "9841281320f386e0ecd44103b63609976ad3604139f790ce23b64b2c0efe6640",
+      "verified": true
+    },
+    {
+      "kind": "metrics_report",
+      "path": "D:\\QT\\output\\demo-daily-2026-11-11\\rounds\\round-001\\generator\\metrics-agent.json",
+      "role": "metrics-agent",
+      "sha256": "4644035f722d0a7f6feb60b4f918be3f2bb935d4d22918e44cfb8a75e5576476",
+      "verified": true
+    },
+    {
+      "kind": "candidate",
+      "path": "D:\\QT\\output\\demo-daily-2026-11-11\\rounds\\round-001\\generator\\candidate.md",
+      "role": "generator-lead",
+      "sha256": "e8495662f383ae83fa015a1226692bd34277f515a75a16aec8cd3c38a89733b4",
+      "verified": true
+    }
+  ],
+  "consecutive_verification_passes": 0,
+  "pending_role": "critic-lead",
+  "request_id": "daily-2026-11-11",
+  "revision_round": 0,
+  "schema_version": "1.0.0",
+  "status": "drafted",
+  "task_id": "daily-2026-11-11",
+  "tool_call_count": 0,
+  "total_duration_seconds": 0,
+  "unresolved_issue_ids": [],
+  "updated_at": "2026-11-11T15:59:48.770182+00:00",
+  "version": "1"
+}

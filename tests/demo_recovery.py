@@ -66,6 +66,12 @@ def run_demo():
     assert result["status"] == "verified"
 
     trace = controller.trace_path.read_text(encoding="utf-8").strip()
+    trace_path = ROOT / "evidence" / "trace" / "recovery.jsonl"
+    trace_path.parent.mkdir(parents=True, exist_ok=True)
+    trace_path.write_text(trace + "\n", encoding="utf-8", newline="\n")
+    snapshot_path = ROOT / "evidence" / "state-snapshots" / "recovery-verified.json"
+    snapshot_path.parent.mkdir(parents=True, exist_ok=True)
+    snapshot_path.write_text(json.dumps(controller.read_state(), ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
     content = [
         "# 断点恢复演示",
         "",

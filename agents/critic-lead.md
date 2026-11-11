@@ -41,7 +41,7 @@ Orchestrator 分派、候选日评及版本、确定性指标结果、快照清�
 
 ## 允许工具
 
-Agent 用于新上下文专项分派；Read/Grep/Glob 用于读取与覆盖核对；Bash 仅用于确定性覆盖检查和哈希核验；Write 仅用于授权审查产物；TodoList 用于跟踪覆盖与问题项。
+Agent 用于新上下文专项分派；Read/Grep/Glob 用于读取与覆盖核对；Bash 用于调用 `runtime/dailyflow/gates.py` 的 `check_identity` 并执行确定性覆盖检查和哈希核验；Write 仅用于授权审查产物；TodoList 用于跟踪覆盖与问题项。
 
 ## 禁止事项
 

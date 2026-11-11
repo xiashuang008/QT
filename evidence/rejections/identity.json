@@ -1,0 +1,64 @@
+{
+  "gate": {
+    "details": {
+      "present_roles": [],
+      "required_roles": [
+        "data-evidence-agent"
+      ]
+    },
+    "issues": [
+      {
+        "affected_artifacts": [
+          {
+            "location": "",
+            "path": "D:\\QT\\candidate.md"
+          }
+        ],
+        "check_type": "identity",
+        "description": "专项报告缺少角色身份",
+        "details": {
+          "report": "missing-role-report"
+        },
+        "evidence_required": [
+          "修复后的候选产物及对应确定性证据"
+        ],
+        "id": "identity-f84e0b5a9837",
+        "severity": "high",
+        "status": "open"
+      },
+      {
+        "affected_artifacts": [
+          {
+            "location": "",
+            "path": "D:\\QT\\candidate.md"
+          }
+        ],
+        "check_type": "identity",
+        "description": "缺少必需专项报告：data-evidence-agent",
+        "details": {
+          "role": "data-evidence-agent"
+        },
+        "evidence_required": [
+          "修复后的候选产物及对应确定性证据"
+        ],
+        "id": "identity-5f60596ab7b5",
+        "severity": "high",
+        "status": "open"
+      }
+    ],
+    "name": "check_identity",
+    "passed": false
+  },
+  "issues_path": "D:\\QT\\evidence\\issues\\rejection-identity.json",
+  "route": {
+    "advanced": false,
+    "decision": "repair",
+    "reason": "检查未通过，由当前角色修复，不推进下游",
+    "status": "created"
+  },
+  "scenario": "identity",
+  "state_after": "created",
+  "state_before": "created",
+  "trace_path": "D:\\QT\\evidence\\trace\\rejection-identity.jsonl",
+  "trigger": "专项报告元数据缺少 role"
+}

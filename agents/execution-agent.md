@@ -33,7 +33,7 @@ Critic 分派、候选日评、指标结果 JSON、`references/template.md`、�
 
 ## 允许工具
 
-Read/Grep/Glob 用于读取和定位；Bash 仅用于确定性模块、数字与格式检查；Write 仅用于授权审查报告。
+Read/Grep/Glob 用于读取和定位；Bash 用于调用 `runtime/dailyflow/gates.py` 的 `check_completeness` 与 `check_numbers`，必须以代码返回的 JSON 判定为模块和格式结论；Write 仅用于授权审查报告。
 
 ## 禁止事项
 

@@ -294,7 +294,18 @@
         "properties": {
           "id": {"type": "string"},
           "severity": {"type": "string"},
-          "affected_artifacts": {"type": "array", "items": {"type": "string"}},
+          "affected_artifacts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["path", "location"],
+              "properties": {
+                "path": {"type": "string"},
+                "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+                "location": {"type": "string"}
+              }
+            }
+          },
           "evidence_required": {"type": "array", "items": {"type": "string"}},
           "status": {"type": "string", "enum": ["open", "resolved"]},
           "opened_round": {"type": "integer", "minimum": 1},

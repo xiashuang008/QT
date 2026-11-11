@@ -1,0 +1,15 @@
+{
+  "acceptance_standard": "unchanged",
+  "allowed_changes": [
+    "prompts/report_writer_system.md",
+    "skills/start/SKILL.md"
+  ],
+  "failure_reference": "示例：结论段呈现顺序需要改进",
+  "lower_acceptance": false,
+  "non_goals": [
+    "不修改验收规则",
+    "不修改阈值",
+    "不修改控制器代码"
+  ],
+  "proposal_id": "evolution-2026-11-11"
+}

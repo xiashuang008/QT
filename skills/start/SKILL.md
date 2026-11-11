@@ -9,6 +9,14 @@ whenToUse: 用户要求生成、恢复或修复某个交易日的票据市场日
 
 严格遵循 `docs/02-architecture.md`。Orchestrator 是唯一枢纽；不得让 Generator 与 Critic 直接交接。每个交易日使用独立 `task_id`，所有阈值、修订轮次和执行预算只读取 `policies/policy.json`，信息时点规则只读取 `policies/pit_rules.json`。
 
+## 智能体绑定
+
+- ReportWriter 使用现有 `agents/generator-lead.md` 角色卡，并同时加载 `prompts/report_writer_system.md` 与本 Skill；不得另建 SDK 调用。
+- 指标岗由 `agents/metrics-agent.md` 驱动，通过 Bash 执行 `scripts/calculator.py`，LLM 不得自行算数。
+- Verifier 由 `agents/critic-lead.md` 及四个 Critic 专项角色卡驱动；各专项通过 Bash 调用 `runtime/dailyflow/gates.py` 获取确定性 JSON 判定。
+- 每个交易日使用 `output/<task_id>/` 作为运行目录，每轮报告写入 `rounds/round-NNN/generator/` 与 `rounds/round-NNN/critic/`，路由决定写入该轮的 `decision.json`。
+- 运行结束后将状态、轨迹、问题项、快照、各轮报告和结果归档到 `evidence/<task_id>/`，不得仅保留被 Git 忽略的 output 证据。
+
 ## 1. 建立或恢复任务
 
 1. 读取任务授权书，确认报告交易日、信息截止时点、时间区间和输出范围。

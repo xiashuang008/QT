@@ -1,0 +1,47 @@
+{
+  "issues": [
+    {
+      "affected_artifacts": [
+        {
+          "location": "",
+          "path": "D:\\QT\\candidate.md"
+        }
+      ],
+      "check_type": "identity",
+      "description": "专项报告缺少角色身份",
+      "details": {
+        "report": "missing-role-report"
+      },
+      "evidence_required": [
+        "修复后的候选产物及对应确定性证据"
+      ],
+      "id": "identity-f84e0b5a9837",
+      "opened_round": 1,
+      "severity": "high",
+      "status": "open"
+    },
+    {
+      "affected_artifacts": [
+        {
+          "location": "",
+          "path": "D:\\QT\\candidate.md"
+        }
+      ],
+      "check_type": "identity",
+      "description": "缺少必需专项报告：data-evidence-agent",
+      "details": {
+        "role": "data-evidence-agent"
+      },
+      "evidence_required": [
+        "修复后的候选产物及对应确定性证据"
+      ],
+      "id": "identity-5f60596ab7b5",
+      "opened_round": 1,
+      "severity": "high",
+      "status": "open"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "task_id": "rejection-identity",
+  "updated_at": "2026-11-11T15:59:49.053693+00:00"
+}

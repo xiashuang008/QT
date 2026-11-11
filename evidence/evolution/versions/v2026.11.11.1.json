@@ -1,0 +1,73 @@
+{
+  "baseline_path": "D:\\QT\\examples\\2026-11-11-daily-review.md",
+  "candidate_path": "D:\\QT\\examples\\2026-11-11-daily-review.md",
+  "candidate_sha256": "e8495662f383ae83fa015a1226692bd34277f515a75a16aec8cd3c38a89733b4",
+  "critic_gates": [
+    {
+      "details": {
+        "checked_numbers": 18
+      },
+      "issues": [],
+      "name": "check_numbers",
+      "passed": true
+    },
+    {
+      "details": {
+        "required_modules": [
+          "票据供给",
+          "缺口分析",
+          "票据利率",
+          "资金面"
+        ]
+      },
+      "issues": [],
+      "name": "check_completeness",
+      "passed": true
+    },
+    {
+      "details": {
+        "checked_fields": [
+          "acceptance_amount",
+          "acceptance_discount_ratio",
+          "cross_year_bill_rate",
+          "daily_required_amount",
+          "discount_amount",
+          "discount_gap",
+          "discount_mom",
+          "discount_yoy",
+          "dr001",
+          "dr007",
+          "omo_injection",
+          "omo_maturity",
+          "omo_net_injection",
+          "r007",
+          "regular_bill_rate",
+          "remaining_business_days",
+          "shibor_on",
+          "trading_amount"
+        ]
+      },
+      "issues": [],
+      "name": "check_timing",
+      "passed": true
+    },
+    {
+      "details": {},
+      "issues": [],
+      "name": "check_wording",
+      "passed": true
+    }
+  ],
+  "metrics_path": "D:\\QT\\examples\\2026-11-11-metrics.json",
+  "regression": {
+    "details": {
+      "holdout_cases": [
+        "holdout-2026-11-10"
+      ]
+    },
+    "issues": [],
+    "name": "check_consistency",
+    "passed": true
+  },
+  "version": "v2026.11.11.1"
+}

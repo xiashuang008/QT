@@ -1,0 +1,29 @@
+{
+  "issues": [
+    {
+      "affected_artifacts": [
+        {
+          "location": "",
+          "path": "D:\\QT\\candidate.md"
+        }
+      ],
+      "check_type": "timing",
+      "description": "字段可得时点晚于信息截止时点：dr001",
+      "details": {
+        "available_at": "2026-11-11T18:00:00+08:00",
+        "cutoff": "2026-11-10T23:59:00+08:00",
+        "field": "dr001"
+      },
+      "evidence_required": [
+        "修复后的候选产物及对应确定性证据"
+      ],
+      "id": "timing-1857a380acfc",
+      "opened_round": 1,
+      "severity": "high",
+      "status": "open"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "task_id": "rejection-timing",
+  "updated_at": "2026-11-11T15:59:49.008549+00:00"
+}

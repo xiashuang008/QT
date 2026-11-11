@@ -1,0 +1,46 @@
+{
+  "gate": {
+    "details": {
+      "checked_numbers": 18
+    },
+    "issues": [
+      {
+        "affected_artifacts": [
+          {
+            "location": "- 贴现量：80 亿元",
+            "path": "D:\\QT\\candidate.md"
+          }
+        ],
+        "check_type": "numbers",
+        "description": "正文数值与指标结果不一致：80",
+        "details": {
+          "actual": "80",
+          "difference": "5",
+          "expected": "75",
+          "location": "- 贴现量：80 亿元",
+          "metric": "discount_amount"
+        },
+        "evidence_required": [
+          "修复后的候选产物及对应确定性证据"
+        ],
+        "id": "numbers-19148f59f6e5",
+        "severity": "high",
+        "status": "open"
+      }
+    ],
+    "name": "check_numbers",
+    "passed": false
+  },
+  "issues_path": "D:\\QT\\evidence\\issues\\rejection-numbers.json",
+  "route": {
+    "advanced": false,
+    "decision": "repair",
+    "reason": "检查未通过，由当前角色修复，不推进下游",
+    "status": "created"
+  },
+  "scenario": "numbers",
+  "state_after": "created",
+  "state_before": "created",
+  "trace_path": "D:\\QT\\evidence\\trace\\rejection-numbers.jsonl",
+  "trigger": "正文贴现量由 75 改为 80，指标结果仍为 75"
+}

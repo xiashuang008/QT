@@ -1,0 +1,23 @@
+{
+  "artifacts": [
+    {
+      "kind": "approval_evidence",
+      "path": "D:\\QT\\evidence\\approval-sample\\approval-v2026.11.11.2.json",
+      "role": "orchestrator",
+      "sha256": "6a500ea590482da605e3556eb335f70ed202f374a94176d09a59fbb185b35259",
+      "verified": true
+    }
+  ],
+  "consecutive_verification_passes": 0,
+  "pending_role": null,
+  "request_id": "approval-state-demo",
+  "revision_round": 0,
+  "schema_version": "1.0.0",
+  "status": "published",
+  "task_id": "approval-state-demo",
+  "tool_call_count": 0,
+  "total_duration_seconds": 0,
+  "unresolved_issue_ids": [],
+  "updated_at": "2026-11-11T15:59:49.294510+00:00",
+  "version": "1"
+}

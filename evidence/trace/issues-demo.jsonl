@@ -1,0 +1,4 @@
+{"event": "request", "payload": {"action": "created", "request_id": "issues-demo"}, "task_id": "issues-demo", "timestamp": "2026-11-11T15:59:49.078066+00:00"}
+{"event": "issue", "payload": {"action": "registered", "issue_id": "numbers-19148f59f6e5", "round": 1}, "task_id": "issues-demo", "timestamp": "2026-11-11T15:59:49.090308+00:00"}
+{"event": "issue", "payload": {"action": "carried_forward", "addressed": false, "closed": false, "critic_verified": false, "issue_id": "numbers-19148f59f6e5", "round": 2}, "task_id": "issues-demo", "timestamp": "2026-11-11T15:59:49.103023+00:00"}
+{"event": "issue", "payload": {"action": "carried_forward", "addressed": true, "closed": true, "critic_verified": true, "issue_id": "numbers-19148f59f6e5", "round": 3}, "task_id": "issues-demo", "timestamp": "2026-11-11T15:59:49.116397+00:00"}

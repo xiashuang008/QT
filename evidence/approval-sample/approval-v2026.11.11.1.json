@@ -1,0 +1,12 @@
+{
+  "approval_id": "approval-2026-11-11-v1",
+  "approved_at": "2026-11-10T10:00:00+08:00",
+  "approver_name": "示例批准人甲",
+  "approver_role": "票据交易台授权人工批准人",
+  "candidate_sha256": "e8495662f383ae83fa015a1226692bd34277f515a75a16aec8cd3c38a89733b4",
+  "conclusion": "approve",
+  "expires_at": "2026-11-12T10:00:00+08:00",
+  "schema_version": "1.0.0",
+  "task_id": "daily-2026-11-11",
+  "version": "v2026.11.11.1"
+}

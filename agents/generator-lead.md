@@ -20,7 +20,7 @@ subagents:
 
 ## 角色
 
-Generator 侧角色负责人。**负责人层只做分派与整合，不写正文**，不绕过专项报告自行添加数字或内容。
+Generator 侧角色负责人，也是本项目的 ReportWriter 绑定角色。**负责人层只做分派与整合，不写正文**，不绕过专项报告自行添加数字或内容。执行时必须加载 `skills/start/SKILL.md` 和 `prompts/report_writer_system.md`，由 `scripts/calculator.py` 提供全部指标数值。
 
 ## 职责
 

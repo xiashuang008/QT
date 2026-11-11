@@ -1,0 +1,63 @@
+{
+  "gate": {
+    "details": {
+      "checked_fields": [
+        "acceptance_amount",
+        "acceptance_discount_ratio",
+        "cross_year_bill_rate",
+        "daily_required_amount",
+        "discount_amount",
+        "discount_gap",
+        "discount_mom",
+        "discount_yoy",
+        "dr001",
+        "dr007",
+        "omo_injection",
+        "omo_maturity",
+        "omo_net_injection",
+        "r007",
+        "regular_bill_rate",
+        "remaining_business_days",
+        "shibor_on",
+        "trading_amount"
+      ]
+    },
+    "issues": [
+      {
+        "affected_artifacts": [
+          {
+            "location": "",
+            "path": "D:\\QT\\candidate.md"
+          }
+        ],
+        "check_type": "timing",
+        "description": "字段可得时点晚于信息截止时点：dr001",
+        "details": {
+          "available_at": "2026-11-11T18:00:00+08:00",
+          "cutoff": "2026-11-10T23:59:00+08:00",
+          "field": "dr001"
+        },
+        "evidence_required": [
+          "修复后的候选产物及对应确定性证据"
+        ],
+        "id": "timing-1857a380acfc",
+        "severity": "high",
+        "status": "open"
+      }
+    ],
+    "name": "check_timing",
+    "passed": false
+  },
+  "issues_path": "D:\\QT\\evidence\\issues\\rejection-timing.json",
+  "route": {
+    "advanced": false,
+    "decision": "repair",
+    "reason": "检查未通过，由当前角色修复，不推进下游",
+    "status": "created"
+  },
+  "scenario": "timing",
+  "state_after": "created",
+  "state_before": "created",
+  "trace_path": "D:\\QT\\evidence\\trace\\rejection-timing.jsonl",
+  "trigger": "DR001 available_at 改为 2026-11-11T18:00:00+08:00"
+}

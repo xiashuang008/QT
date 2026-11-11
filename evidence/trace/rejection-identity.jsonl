@@ -1,0 +1,4 @@
+{"event": "request", "payload": {"action": "created", "request_id": "rejection-identity"}, "task_id": "rejection-identity", "timestamp": "2026-11-11T15:59:49.033645+00:00"}
+{"event": "issue", "payload": {"action": "registered", "issue_id": "identity-f84e0b5a9837", "round": 1}, "task_id": "rejection-identity", "timestamp": "2026-11-11T15:59:49.045848+00:00"}
+{"event": "issue", "payload": {"action": "registered", "issue_id": "identity-5f60596ab7b5", "round": 1}, "task_id": "rejection-identity", "timestamp": "2026-11-11T15:59:49.049788+00:00"}
+{"event": "route", "payload": {"current_role": "critic-lead", "decision": "repair", "reason": "检查未通过，由当前角色修复，不推进下游", "status": "created"}, "task_id": "rejection-identity", "timestamp": "2026-11-11T15:59:49.065884+00:00"}

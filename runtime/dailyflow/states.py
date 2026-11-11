@@ -24,6 +24,42 @@ STATE_ORDER = (
 PROTECTED_STATES = {FlowState.APPROVED, FlowState.PUBLISHED}
 
 
+class TerminalResult(str, Enum):
+    REJECTED = "rejected"
+    BLOCKED = "blocked"
+    EXHAUSTED = "exhausted"
+    STALLED = "stalled"
+    USER_STOPPED = "user_stopped"
+
+    @property
+    def label(self):
+        return {
+            TerminalResult.REJECTED: "否决",
+            TerminalResult.BLOCKED: "阻断",
+            TerminalResult.EXHAUSTED: "耗尽",
+            TerminalResult.STALLED: "停滞",
+            TerminalResult.USER_STOPPED: "用户停止",
+        }[self]
+
+    @property
+    def reason(self):
+        return {
+            TerminalResult.REJECTED: "提交被拒，留在当前角色",
+            TerminalResult.BLOCKED: "变更或不安全，须修复或人工介入",
+            TerminalResult.EXHAUSTED: "重试或修订轮次用尽",
+            TerminalResult.STALLED: "连续无进展",
+            TerminalResult.USER_STOPPED: "人工终止",
+        }[self]
+
+    @property
+    def acceptance_passed(self):
+        return False
+
+    @property
+    def publication_allowed(self):
+        return False
+
+
 class TransitionError(ValueError):
     pass
 

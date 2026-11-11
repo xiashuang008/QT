@@ -1,0 +1,18 @@
+{
+  "candidate_changed": {
+    "reasons": [
+      "批准候选 SHA-256 不匹配"
+    ],
+    "valid": false
+  },
+  "original": {
+    "reasons": [],
+    "valid": true
+  },
+  "version_changed": {
+    "reasons": [
+      "批准版本不匹配"
+    ],
+    "valid": false
+  }
+}

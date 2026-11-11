@@ -1,4 +1,6 @@
+import argparse
 import hashlib
+import json
 import re
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -245,3 +247,73 @@ def check_identity(reports, required_roles):
     for role in sorted(required - present):
         issues.append(_issue("identity", f"缺少必需专项报告：{role}", details={"role": role}))
     return GateResult("check_identity", not issues, issues, {"required_roles": sorted(required), "present_roles": sorted(present)})
+
+
+def check_wording(draft):
+    issues = []
+    absolute_terms = ("必然", "确定", "无风险", "稳赚", "保证收益")
+    advice_terms = ("建议买入", "建议卖出", "建议建仓", "建议平仓", "立即买入", "立即卖出", "报价指令")
+    authorization_terms = ("验收通过即可发布", "核验通过即可发布", "自动批准发布", "无需人工批准")
+    for line in draft.splitlines():
+        for term in absolute_terms:
+            if term in line:
+                issues.append(_issue("wording", f"存在绝对化表述：{term}", details={"term": term, "location": line.strip()}))
+        if "输出为研究参考，不是报价指令。" not in line:
+            for term in advice_terms:
+                if term in line:
+                    issues.append(_issue("wording", f"存在投资或报价建议：{term}", details={"term": term, "location": line.strip()}))
+        for term in authorization_terms:
+            if term in line:
+                issues.append(_issue("wording", f"存在越权发布表述：{term}", details={"term": term, "location": line.strip()}))
+    return GateResult("check_wording", not issues, issues)
+
+
+def _read_json(path):
+    return json.loads(Path(path).read_text(encoding="utf-8"))
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description="票据日评确定性检查关卡")
+    subparsers = parser.add_subparsers(dest="check", required=True)
+
+    freshness = subparsers.add_parser("check_freshness")
+    freshness.add_argument("--snapshot", required=True)
+    freshness.add_argument("--expected-date", required=True)
+
+    for name in ["check_numbers", "check_completeness", "check_timing", "check_wording"]:
+        command = subparsers.add_parser(name)
+        command.add_argument("--draft", required=True)
+        if name != "check_wording":
+            command.add_argument("--metrics", required=name != "check_completeness")
+        if name == "check_timing":
+            command.add_argument("--cutoff", required=True)
+
+    consistency = subparsers.add_parser("check_consistency")
+    consistency.add_argument("--candidate", required=True)
+    consistency.add_argument("--baseline", required=True)
+
+    identity = subparsers.add_parser("check_identity")
+    identity.add_argument("--reports", required=True)
+    identity.add_argument("--required-roles", nargs="+", required=True)
+
+    args = parser.parse_args(argv)
+    if args.check == "check_freshness":
+        result = check_freshness(_read_json(args.snapshot), args.expected_date)
+    elif args.check == "check_numbers":
+        result = check_numbers(Path(args.draft).read_text(encoding="utf-8"), _read_json(args.metrics))
+    elif args.check == "check_completeness":
+        result = check_completeness(Path(args.draft).read_text(encoding="utf-8"), _read_json(args.metrics) if args.metrics else None)
+    elif args.check == "check_timing":
+        result = check_timing(Path(args.draft).read_text(encoding="utf-8"), _read_json(args.metrics), args.cutoff)
+    elif args.check == "check_wording":
+        result = check_wording(Path(args.draft).read_text(encoding="utf-8"))
+    elif args.check == "check_consistency":
+        result = check_consistency(_read_json(args.candidate), _read_json(args.baseline))
+    else:
+        result = check_identity(_read_json(args.reports), args.required_roles)
+    print(json.dumps(result.to_dict(), ensure_ascii=False, sort_keys=True))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

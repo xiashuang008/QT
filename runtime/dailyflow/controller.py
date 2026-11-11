@@ -8,13 +8,17 @@ from pathlib import Path
 
 try:
     from .gates import GateResult
-    from .states import FlowState, resume_stage, transition_state
+    from .states import FlowState, TerminalResult, resume_stage, transition_state
 except ImportError:
     from gates import GateResult
-    from states import FlowState, resume_stage, transition_state
+    from states import FlowState, TerminalResult, resume_stage, transition_state
 
 
 class EvidenceError(ValueError):
+    pass
+
+
+class ControlStateWriteForbidden(PermissionError):
     pass
 
 
@@ -44,6 +48,7 @@ class FlowController:
                 "updated_at": self._now(),
             })
             self.record_event("request", {"request_id": task_id, "action": "created"})
+            self._write_json(self.case_dir / "state-snapshots" / "created.json", self.read_state())
         if not self.issues_path.exists():
             self._write_json(self.issues_path, {"schema_version": "1.0.0", "task_id": task_id, "issues": [], "updated_at": self._now()})
         if not self.trace_path.exists():
@@ -134,6 +139,7 @@ class FlowController:
         }.get(target)
         state["updated_at"] = self._now()
         self._write_json(self.state_path, state)
+        self._write_json(self.case_dir / "state-snapshots" / f"{target.value}.json", state)
         self.record_event("route", {"decision": "advance", "from": current.value, "to": target.value, "role": role})
         return True
 
@@ -143,6 +149,7 @@ class FlowController:
         state["result_path"] = artifact["path"]
         state["updated_at"] = self._now()
         self._write_json(self.state_path, state)
+        self._write_json(self.case_dir / "state-snapshots" / f"{state['status']}.json", state)
         return artifact
 
     def resume(self):
@@ -241,3 +248,111 @@ class FlowController:
         self._write_json(self.state_path, state)
         self.record_event("gate", {"name": "consecutive_verification", "candidate_sha256": candidate_sha256, "passed": passed, "consecutive_passes": state["consecutive_verification_passes"]})
         return state["consecutive_verification_passes"]
+
+    def stop(self, result, reason, current_role=None):
+        result = TerminalResult(result)
+        state = self.read_state()
+        state["terminal_result"] = result.value
+        state["terminal_result_label"] = result.label
+        state["terminal_reason"] = reason or result.reason
+        state["acceptance_passed"] = False
+        state["publication_allowed"] = False
+        if current_role:
+            state["pending_role"] = current_role
+        state["updated_at"] = self._now()
+        self._write_json(self.state_path, state)
+        self.record_event("stop", {
+            "terminal_result": result.value,
+            "label": result.label,
+            "reason": state["terminal_reason"],
+            "status": state["status"],
+            "acceptance_passed": False,
+            "publication_allowed": False,
+        })
+        return {"decision": "stop", "terminal_result": result.value, "acceptance_passed": False, "status": state["status"]}
+
+    def _route_wait_or_repair(self, decision, reason, current_role):
+        state = self.read_state()
+        state["pending_role"] = current_role
+        state["last_route_decision"] = decision
+        state["last_route_reason"] = reason
+        state["updated_at"] = self._now()
+        self._write_json(self.state_path, state)
+        self.record_event("route", {"decision": decision, "reason": reason, "current_role": current_role, "status": state["status"]})
+        return {"decision": decision, "reason": reason, "status": state["status"], "advanced": False}
+
+    @staticmethod
+    def _dependency_errors(dependencies):
+        errors = []
+        for dependency in dependencies:
+            path = Path(dependency["path"]).resolve()
+            if not path.is_file():
+                errors.append(f"依赖文件缺失：{path}")
+                continue
+            expected_sha = dependency.get("sha256")
+            if expected_sha and hashlib.sha256(path.read_bytes()).hexdigest() != expected_sha:
+                errors.append(f"依赖哈希不一致：{path}")
+            if dependency.get("verified") is not True:
+                errors.append(f"依赖尚未核验：{path}")
+        return errors
+
+    def start_new_case_for_input_version(self, input_version):
+        safe_version = "".join(character if character.isalnum() or character in "-_" else "-" for character in str(input_version))
+        new_task_id = f"{self.task_id}-input-{safe_version}"
+        new_controller = FlowController(new_task_id, self.case_dir.parent / new_task_id, clock=self.clock)
+        state = new_controller.read_state()
+        state["input_version"] = str(input_version)
+        state["dependencies_rebuild_required"] = True
+        state["artifacts"] = []
+        state["updated_at"] = new_controller._now()
+        new_controller._write_json(new_controller.state_path, state)
+        new_controller.record_event("route", {"decision": "new_case", "reason": "输入版本变化，重建依赖产物", "input_version": str(input_version)})
+        self.record_event("route", {"decision": "new_case", "new_task_id": new_task_id, "input_version": str(input_version)})
+        return new_controller
+
+    def route_submission(self, current_role, input_complete, submission_valid, checks_passed, target=None, evidence_paths=(), gate_result=None, terminal_result=None, terminal_reason="", dependencies=None, input_version=None):
+        if input_version is not None:
+            state = self.read_state()
+            existing_version = state.get("input_version")
+            if existing_version is None:
+                state["input_version"] = str(input_version)
+                state["updated_at"] = self._now()
+                self._write_json(self.state_path, state)
+            elif existing_version != str(input_version):
+                new_controller = self.start_new_case_for_input_version(input_version)
+                return {"decision": "new_case", "controller": new_controller, "advanced": False, "dependencies_rebuild_required": True}
+        if terminal_result is not None:
+            return self.stop(terminal_result, terminal_reason, current_role)
+        dependency_errors = self._dependency_errors(dependencies or [])
+        if not input_complete or dependency_errors:
+            reason = "输入缺失" if not input_complete else "；".join(dependency_errors)
+            return self._route_wait_or_repair("wait", reason, current_role)
+        if not submission_valid:
+            return self._route_wait_or_repair("repair", "提交无效，由当前角色修复，不推进下游", current_role)
+        if not checks_passed:
+            return self._route_wait_or_repair("repair", "检查未通过，由当前角色修复，不推进下游", current_role)
+        if target is None:
+            raise ValueError("检查通过并准备推进时必须提供 target")
+        gate = gate_result or {"name": "route_gate", "passed": True, "issues": []}
+        advanced = self.advance(target, evidence_paths, current_role, gate)
+        if not advanced:
+            return self._route_wait_or_repair("repair", "推进前关卡未通过，由当前角色修复", current_role)
+        return {"decision": "advance", "advanced": True, "status": self.read_state()["status"]}
+
+    def write_role_report(self, path, content, role):
+        if not role:
+            raise EvidenceError("角色报告缺少角色身份")
+        report_path = Path(path).resolve()
+        control_paths = {self.state_path.resolve(), self.issues_path.resolve(), self.trace_path.resolve()}
+        if report_path in control_paths:
+            raise ControlStateWriteForbidden(f"角色 {role} 不得直接改写控制状态：{report_path}")
+        if isinstance(content, (dict, list)):
+            content = json.dumps(content, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        self._atomic_write(report_path, str(content))
+        self.record_event("artifact", {"action": "role_report_written", "role": role, "path": str(report_path)})
+        return {
+            "role": role,
+            "path": str(report_path),
+            "sha256": hashlib.sha256(report_path.read_bytes()).hexdigest(),
+            "control_state_updated": False,
+        }

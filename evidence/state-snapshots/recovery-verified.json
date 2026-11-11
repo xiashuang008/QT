@@ -1,0 +1,74 @@
+{
+  "artifacts": [
+    {
+      "kind": "snapshot_manifest",
+      "path": "D:\\QT\\output\\recovery-demo-case\\snapshots\\2025-10-02\\manifest.json",
+      "role": "data-agent",
+      "sha256": "8ff7878281c075c8d000683cfe80e6b37a6fce9a5c0e30b914206bb8e3e69dc2",
+      "verified": true
+    },
+    {
+      "kind": "data_report",
+      "path": "D:\\QT\\output\\recovery-demo-case\\rounds\\round-001\\generator\\data-agent.json",
+      "role": "data-agent",
+      "sha256": "846d607528094d4030b17c0881428c43fbf898511a558b9ae809a4b5b5969bca",
+      "verified": true
+    },
+    {
+      "kind": "timing_report",
+      "path": "D:\\QT\\output\\recovery-demo-case\\rounds\\round-001\\generator\\timing-agent.json",
+      "role": "timing-agent",
+      "sha256": "7dad00004101aa1a31d981f1576917e4194aa173fb1da490d21c167c74010319",
+      "verified": true
+    },
+    {
+      "kind": "metrics",
+      "path": "D:\\QT\\output\\recovery-demo-case\\rounds\\round-001\\generator\\metrics.json",
+      "role": "metrics-agent",
+      "sha256": "a9d5f1b25760759e0e0b8e5db0c4af42fe1ad710fb3ca39584e8e66f8bd7edea",
+      "verified": true
+    },
+    {
+      "kind": "metrics_report",
+      "path": "D:\\QT\\output\\recovery-demo-case\\rounds\\round-001\\generator\\metrics-agent.json",
+      "role": "metrics-agent",
+      "sha256": "a7194f571161a27a78d58751b8d4401d9469c8534ab0832ce1961571ccf287a8",
+      "verified": true
+    },
+    {
+      "kind": "candidate",
+      "path": "D:\\QT\\output\\recovery-demo-case\\rounds\\round-001\\generator\\candidate.md",
+      "role": "generator-lead",
+      "sha256": "4887b80a017dc45fd752b503927b9d6ad706d0c6a970c53f0a12119c4b080efa",
+      "verified": true
+    },
+    {
+      "kind": "verification",
+      "path": "D:\\QT\\output\\recovery-demo-case\\rounds\\round-002\\critic\\verification.json",
+      "role": "critic-lead",
+      "sha256": "17acaf8e1650823fb2652583a1d8a5d6aea2b3e2dc6bd77a512535bc4613b7d0",
+      "verified": true
+    },
+    {
+      "kind": "result",
+      "path": "D:\\QT\\output\\recovery-demo-case\\result.json",
+      "role": "orchestrator",
+      "sha256": "5f5a28d7e30a1bd1d333472fcddb42960a28389ee6546c42661f938c882dc76d",
+      "verified": true
+    }
+  ],
+  "consecutive_verification_passes": 2,
+  "pending_role": "票据交易台授权人工批准人",
+  "request_id": "recovery-demo",
+  "result_path": "D:\\QT\\output\\recovery-demo-case\\result.json",
+  "revision_round": 0,
+  "schema_version": "1.0.0",
+  "status": "verified",
+  "task_id": "recovery-demo",
+  "tool_call_count": 0,
+  "total_duration_seconds": 0,
+  "unresolved_issue_ids": [],
+  "updated_at": "2026-11-11T15:59:49.830382+00:00",
+  "verification_candidate_sha256": "4887b80a017dc45fd752b503927b9d6ad706d0c6a970c53f0a12119c4b080efa",
+  "version": "1"
+}
