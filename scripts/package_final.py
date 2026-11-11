@@ -21,9 +21,13 @@ def should_exclude(relative_path):
     return any(part in excluded_dirs for part in parts) or relative_path.suffix == ".pyc"
 
 
-def package_project():
+def package_project(destination=None):
     project_root = Path(__file__).resolve().parents[1]
-    destination = project_root.parent / OUTPUT_NAME
+    # 默认输出到项目目录的上一级；也可通过命令行参数指定其他位置
+    if destination is None:
+        destination = project_root.parent / OUTPUT_NAME
+    else:
+        destination = Path(destination).resolve()
     files = [
         path
         for path in project_root.rglob("*")
@@ -59,7 +63,18 @@ def package_project():
 
 
 def main():
-    package_project()
+    import argparse
+
+    parser = argparse.ArgumentParser(description="将项目打包为含完整 .git/ 历史的 ZIP")
+    parser.add_argument(
+        "-o",
+        "--output",
+        default=None,
+        help="输出文件路径。默认输出到项目目录的上一级。",
+    )
+    args = parser.parse_args()
+    destination = package_project(args.output)
+    print(f"打包完成：{destination}")
 
 
 if __name__ == "__main__":
