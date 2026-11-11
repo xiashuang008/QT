@@ -185,6 +185,10 @@ stateDiagram-v2
     approved --> published : 发布关卡通过
 ```
 
+![状态机](images/02-architecture-states.png)
+
+*图注：实线=角色负责人与控制流，虚线=专项 Agent 分派与报告流，叉线=禁止直连，橙色边框=演进边界。*
+
 `approved` 与 `published` 仅能由关卡判定后由控制器推进。人工 `approve` 是批准关卡的必要输入，不等于允许手工改写状态；任何绕过控制器的手工推进、跳级、回写或伪造批准均须拒绝。修订回路是受控的任务路由，不得通过手工修改主状态伪装成新候选已核验。
 
 ## 六、与既有资产的一致性
@@ -199,7 +203,7 @@ stateDiagram-v2
 实线表示角色负责人及控制流，虚线表示专项 Agent 的分派与报告流。Generator 与 Critic 之间的叉线表示禁止直连；两条「经由 Orchestrator」路径是所有候选输入和审查结果的唯一通道。
 
 ```mermaid
-flowchart LR
+flowchart TB
     O["Orchestrator<br/>唯一枢纽：状态 + 检查关卡 + 路由"]
 
     subgraph GeneratorSide["Generator 侧：构建与汇合"]
@@ -264,4 +268,9 @@ flowchart LR
     classDef hub stroke-width: 3px;
     class GD,GP,GM,CD,CS,CE,CR specialist;
     class O hub;
+    style EvolutionBoundary stroke:#f59e0b,stroke-width:3px,color:#fff7ed
 ```
+
+![工作流拓扑图](images/02-architecture-workflow.png)
+
+*图注：实线=角色负责人与控制流，虚线=专项 Agent 分派与报告流，叉线=禁止直连，橙色边框=演进边界。*
