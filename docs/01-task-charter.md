@@ -72,3 +72,184 @@
 - 公开数据为日频聚合，无法刻画日内资金面。
 - 部分数据需人工录入，录入时点与口径须在快照中登记。
 - 本项目输出为研究参考，不是报价指令，不含交易成本与流动性冲击。
+
+## 八、输入
+
+本章逐阶段登记输入项、来源机构或上游产物、数据格式与格式样例。以下样例仅说明结构，数值、日期、版本号和路径均为示意，不代表真实市场数据或既有文件。
+
+### S0 数据采集
+
+| 输入项 | 来源机构 | 数据格式 |
+| --- | --- | --- |
+| 承兑量、贴现量、交易量，以及跨年票与普通票利率 | 上海票据交易所（SHEX）；公开渠道无法获取时由用户提供 Excel 更新，再转为规定格式 | 带日期、口径、来源与可得时点元数据的 CSV / JSON |
+| 公开市场操作投放、到期、净投放 | 中国人民银行 | 带日期、口径、来源与可得时点元数据的 CSV / JSON |
+| SHIBOR 隔夜、DR001、DR007、R007 | 全国银行间同业拆借中心 / CFETS、货币网 | 带日期、口径、来源与可得时点元数据的 CSV / JSON |
+| NCD 二级市场收益率与收益率曲线，作为资金面参照 | 中国外汇交易中心（CFETS） | 带日期、期限、口径、来源与可得时点元数据的 CSV / JSON |
+
+JSON 格式样例：
+
+```json
+{
+  "field": "承兑量",
+  "data_date": "2026-09-29",
+  "value": 0.0,
+  "unit": "亿元",
+  "definition": "数据所属交易日的票据承兑量，日频聚合口径",
+  "source_institution": "上海票据交易所（SHEX）",
+  "available_at": "2026-09-30T09:00:00+08:00",
+  "disclosure_time_confirmed": false
+}
+```
+
+CSV 格式样例：
+
+```csv
+field,data_date,value,unit,definition,source_institution,available_at
+DR001,2026-09-29,0.0,%,存款类机构隔夜质押式回购加权利率,全国银行间同业拆借中心 / CFETS,2026-09-29T18:00:00+08:00
+```
+
+### S1 口径判定
+
+| 输入项 | 来源机构或上游产物 | 数据格式 |
+| --- | --- | --- |
+| S0 当日快照，包含字段值、数据日期、口径、来源和可得时点 | S0 数据采集；原始来源机构随快照逐字段保留 | 快照清单 JSON，以及快照引用的 CSV / JSON |
+| 逐字段 `available_at`、信息截止规则与禁止操作 | 项目冻结策略 `policies/pit_rules.json` | JSON |
+
+格式样例：
+
+```json
+{
+  "snapshot": {
+    "snapshot_id": "snapshot-2026-09-30",
+    "manifest_path": "data/snapshots/snapshot-2026-09-30.json",
+    "content_format": "CSV / JSON"
+  },
+  "pit_rules": {
+    "path": "policies/pit_rules.json",
+    "schema_version": "1.0.0"
+  },
+  "information_cutoff": "2026-09-29T23:59:00+08:00"
+}
+```
+
+### S2 确定性计算
+
+| 输入项 | 来源机构或上游产物 | 数据格式 |
+| --- | --- | --- |
+| S1 判定后可用于本次报告的字段清单 | S1 口径判定；字段原始来源机构继续随元数据保留 | JSON |
+| 昨日值、去年同期值、本月贴现到期量、近 5 个工作日日均贴现量 | 已核验历史快照、基线数据集；票据端原始来源为上海票据交易所（SHEX） | 带基期日期与口径元数据的 JSON |
+
+格式样例：
+
+```json
+{
+  "usable_fields": [
+    {
+      "field": "贴现量",
+      "data_date": "2026-09-28",
+      "value": 0.0,
+      "unit": "亿元"
+    }
+  ],
+  "baseline": {
+    "previous_day": {"data_date": "2026-09-27", "value": 0.0},
+    "same_period_last_year": {"data_date": "2025-09-28", "value": 0.0},
+    "month_discount_maturity": {"month": "2026-09", "value": 0.0, "unit": "亿元"},
+    "last_5_business_days_average_discount": {"start_date": "2026-09-22", "end_date": "2026-09-28", "value": 0.0, "unit": "亿元"}
+  }
+}
+```
+
+### S3 日评生成
+
+| 输入项 | 来源机构或上游产物 | 数据格式 |
+| --- | --- | --- |
+| S2 指标结果 | S2 确定性计算 | 指标结果 JSON，包含指标标识、数值、单位、数据日期与基期 |
+| 日评模板 | 项目人工维护的 `references/template.md` | Markdown，包含四个固定模块与指标占位符 |
+
+指标结果 JSON 样例：
+
+```json
+{
+  "metrics": {
+    "discount_amount": {
+      "display_name": "贴现量",
+      "value": 0.0,
+      "unit": "亿元",
+      "data_date": "2026-09-28"
+    }
+  }
+}
+```
+
+模板格式样例：
+
+```markdown
+## 票据供给
+贴现量：{{ discount_amount.value }} {{ discount_amount.unit }}
+```
+
+### S4 独立核验
+
+| 输入项 | 来源机构或上游产物 | 数据格式 |
+| --- | --- | --- |
+| 候选日评 | S3 日评生成 | Markdown |
+| 确定性指标结果 | S2 确定性计算 | 指标结果 JSON |
+| 快照清单 | S0 数据采集与 S1 口径判定 | 快照清单 JSON，包含文件哈希、数据日期、口径、来源与可得时点 |
+
+格式样例：
+
+```json
+{
+  "candidate": {"path": "examples/candidate.md", "format": "Markdown", "sha256": "<candidate-sha256>"},
+  "metrics": {"path": "examples/metrics.json", "format": "JSON", "sha256": "<metrics-sha256>"},
+  "snapshot_manifest": {"path": "examples/snapshot-manifest.json", "format": "JSON", "sha256": "<snapshot-sha256>"}
+}
+```
+
+### S5 人工批准
+
+| 输入项 | 来源机构或上游产物 | 数据格式 |
+| --- | --- | --- |
+| 经连续两轮独立核验的日评 | S4 独立核验 | Markdown，并附核验结论 JSON |
+| 绑定候选产物的版本号 | 项目版本注册表 | 字符串，注册记录使用 JSON |
+
+格式样例：
+
+```json
+{
+  "version": "v2026.09.30.1",
+  "verified_review_path": "examples/candidate.md",
+  "candidate_sha256": "<candidate-sha256>",
+  "consecutive_verification_passes": 2
+}
+```
+
+### S6 持续监测
+
+| 输入项 | 来源机构或上游产物 | 数据格式 |
+| --- | --- | --- |
+| 历史已发布日评序列 | S5 人工批准发布记录与历史版本注册表 | Markdown 日评序列，索引采用 JSON / JSONL |
+| 新一轮指标结果 | 后续交易日的 S2 确定性计算 | 指标结果 JSON |
+
+格式样例：
+
+```json
+{
+  "published_history_index": {"path": "examples/published-history.jsonl", "format": "JSONL"},
+  "new_metrics": {"path": "examples/next-metrics.json", "format": "JSON"},
+  "comparison_baseline_version": "v2026.09.30.1"
+}
+```
+
+## 九、为何需要持久化工作流，而非一次性脚本
+
+1. **信息截止时点具有硬约束。** 本任务在信息截止时点上有硬约束：08:30 触发时只能拿到 T-1 日及之前已公开的数据。一次性脚本无法保证中途不混入尚未公布的当日数据，必须有持久化的时点判定与检查关卡，逐字段保存并复核 `available_at`、快照清单和判定结果。
+
+2. **跨阶段、跨工具调用的执行需要可恢复状态。** 从采集、口径判定、计算、生成、核验到批准的六阶段跨越多次工具调用。中途失败时，一次性脚本无法知道已完成到哪一步，也就无法在不重复已完成操作的前提下恢复。持久化工作流必须记录阶段状态、输入输出哈希和已核验检查点，从最近的有效检查点续跑。
+
+3. **有界修订与连续核验要求跨轮次留痕。** 核验不通过需回退修订，最多 2 轮，且同一候选须连续两轮通过。这要求跨轮次保留状态、产物哈希与问题项台账，以识别候选是否变化、问题是否消除、修订次数是否耗尽，以及连续通过轮次是否仍属于同一候选。
+
+4. **每日重复执行必须可追溯、可回归。** 需要版本注册表、固定基线与回归检查，以判断某次改动是改进了还是退化了。人工批准记录须具名、带有效期、绑定具体版本，并与版本记录分离保存，防止版本内容变化后沿用旧批准，或将验收通过误当作发布授权。
+
+**结论：本任务不属于「单次提示词或单次报告更新」，而是一个跨阶段、跨交易日、需保留状态且可恢复的持续工作流。**
