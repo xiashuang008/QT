@@ -17,9 +17,13 @@
 | --- | --- |
 | 项目初始化 | 已完成 |
 | 任务范围与验收策略定义 | 已完成 |
+| 架构设计 | 已完成 |
+| 提示词、角色卡、技能与配置 | 已完成 |
 | 工作流实现 | 已完成 |
-| 测试与验证 | 已完成 |
-| 环境、运行、贡献与 AI 使用说明（第 6 步） | 待补充 |
+| 端到端测试与证据 | 已完成 |
+| 文档与收尾 | 已完成 |
+| 提交历史 | 共 9 次有意义的提交，覆盖任务定义、架构设计、提示词与配置、实现、端到端证据、收尾六个阶段 |
+| 打包 | 待项目负责人确认后执行 |
 
 ## 目录结构说明
 
@@ -46,16 +50,191 @@
 
 ## 环境配置
 
-待补充
+### Python 与依赖
+
+- **最低版本：Python 3.10。** 代码使用 dataclasses、f-string 等特性，并在多个文件中使用 `Path.write_text(..., newline=...)`；`newline` 参数由 Python 3.10 引入，因此不能声称 Python 3.9 可直接运行。
+- 项目仅使用 Python 标准库，无第三方 pip 依赖；`requirements.txt` 只有说明注释。
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+该命令无需也不会安装任何第三方包。
+
+### Kimi Code 插件安装
+
+在 Kimi Code 中执行：
+
+```text
+/plugins install D:\QT
+/reload
+```
+
+安装后的入口为：
+
+- `/bill-daily:start`：生成或恢复一个交易日的日评。
+- `/bill-daily:evo`：在固定基线上演进工作流。
+
+本项目**不需要任何 API Key**：数值计算由确定性脚本完成，智能体由 Kimi Code 调度。
 
 ## 运行说明
 
-待补充
+以下命令均在项目根目录执行。演示使用合成固定夹具，不访问真实客户数据。
+
+### 跑全部测试
+
+```bash
+python -m unittest discover -s tests
+```
+
+运行 `tests/` 下全部单元、集成和证据校验测试，结果输出到控制台，不生成运行时报告文件。
+
+### 跑检查脚本
+
+```bash
+python scripts/check.py
+```
+
+以统一入口运行全部测试，结果输出到控制台；失败时返回非零退出码。
+
+### 跑端到端演示
+
+```bash
+python tests/demo_daily_run.py
+```
+
+运行 2026-11-11 固定夹具全流程，生成正常日评、时点违规样例、拒绝路径、问题项、审批及演进证据：
+
+- 示例写入 `examples/`
+- 证据写入 `evidence/`
+- 临时运行状态写入 `output/demo-daily-2026-11-11/`
+
+### 跑断点恢复演示
+
+```bash
+python tests/demo_recovery.py
+```
+
+先在计算完成后故意中断，再验证恢复时不重复采集和计算。结果写入 `evidence/recovery-demo.md`、`evidence/trace/recovery.jsonl` 和 `evidence/state-snapshots/recovery-verified.json`。
+
+### 跑演进、采纳与回滚演示校验
+
+```bash
+python tests/test_evolution.py
+```
+
+执行演进函数与演示证据测试，校验固定基线、回归、人工批准、版本采纳和回滚；读取 `evidence/evolution-demo.md`、`evidence/version-registry.jsonl` 等已有证据，不重新生成这些文件。重新生成演进证据请运行 `python tests/demo_daily_run.py`。
+
+### 跑扰动式时点检验
+
+```bash
+python scripts/leakage_probe.py
+```
+
+加载扰动检验函数；该库脚本本身不生成文件或控制台报告。实际安全与泄露反例断言通过以下命令执行，结果输出到控制台：
+
+```bash
+python -m unittest discover -s tests -p "test_leakage_probe.py"
+```
+
+### 跑完整日报流程
+
+```bash
+python scripts/run_daily.py
+```
+
+使用默认固定夹具完成采集、计算、候选生成和两轮核验，最终等待人工批准而不自动发布：
+
+- 运行产物写入 `output/mock-2025-10-02/`
+- 归档证据写入 `evidence/mock-2025-10-02/`
+
+可用 `--task-id`、`--case-dir`、`--report-date`、`--cutoff` 和 `--evidence-root` 指定其他合成案例路径。
+
+## 关键文件清单
+
+| 文件或目录 | 是什么 |
+| --- | --- |
+| `README.md` | 项目身份、环境、运行、资产、贡献与 AI 使用说明。 |
+| `AGENTS.md` | 项目目录职责约定。 |
+| `docs/01-task-charter.md` | 目标用户、任务产出、输入、验收标准、局限与持久化必要性定义。 |
+| `docs/02-architecture.md` | 唯一枢纽拓扑、角色交接、状态机、关卡、恢复与演进架构。 |
+| `docs/images/02-architecture-workflow.png` | 实际渲染的工作流拓扑图。 |
+| `docs/images/02-architecture-states.png` | 实际渲染的状态机图。 |
+| `policies/pit_rules.json` | 逐字段来源、口径、`available_at` 与截止时点可用性规则。 |
+| `policies/policy.json` | 冻结的六项验收阈值、修订与执行上限、停止分类和授权边界。 |
+| `policies/acceptance-gates.md` | 验收门槛与有界修订策略的可读说明。 |
+| `prompts/report_writer_system.md` | ReportWriter 的四模块、数值引用、时点与文风约束。 |
+| `prompts/verifier_system.md` | Verifier 的逐数字对账、覆盖检查与问题项要求。 |
+| `agents/orchestrator.md` | 唯一枢纽角色卡。 |
+| `agents/generator-lead.md` | Generator 负责人及 ReportWriter 绑定角色卡。 |
+| `agents/critic-lead.md` | Critic 负责人角色卡。 |
+| `agents/evolution-lead.md` | 演进负责人角色卡。 |
+| `agents/data-agent.md` | 数据采集专项角色卡。 |
+| `agents/timing-agent.md` | 口径与时点判定专项角色卡。 |
+| `agents/metrics-agent.md` | 确定性指标计算专项角色卡。 |
+| `agents/data-evidence-agent.md` | 数据证据与逐数字对账专项角色卡。 |
+| `agents/robustness-agent.md` | 时点与跨模块口径审查专项角色卡。 |
+| `agents/execution-agent.md` | 模块、额外数字和格式审查专项角色卡。 |
+| `agents/risk-control-agent.md` | 措辞、禁用信息和发布授权审查专项角色卡。 |
+| `skills/start/SKILL.md` | 日评生成、核验、修复与人工批准等待流程。 |
+| `skills/evo/SKILL.md` | 固定基线、限定演进、回归、登记与回滚流程。 |
+| `commands/start.md` | `/bill-daily:start` 的命令入口。 |
+| `commands/evo.md` | `/bill-daily:evo` 的命令入口。 |
+| `references/schemas.md` | 快照、指标、候选、核验、问题项、状态、版本和批准的 JSON 结构。 |
+| `references/policies.md` | 角色契约与权限边界说明。 |
+| `references/data-sources.md` | 三源数据字段、发布时点与可用性限制。 |
+| `references/template.md` | 四模块日评模板和指标占位符。 |
+| `config/workflow.yaml` | 阶段顺序、策略引用、预算和停止规则配置。 |
+| `config/approval.yaml` | 人工批准门和分离存储路径配置。 |
+| `runtime/dailyflow/states.py` | 状态、迁移、恢复阶段与五类终止结果定义。 |
+| `runtime/dailyflow/controller.py` | 证据登记、原子状态写入、路由、恢复和问题项控制。 |
+| `runtime/dailyflow/gates.py` | 确定性检查函数及智能体 JSON 命令行入口。 |
+| `runtime/dailyflow/evolution.py` | 批准校验、演进范围校验、版本登记与回滚工具。 |
+| `scripts/calculator.py` | 纯 Python 指标计算与 JSON 输出。 |
+| `scripts/calendar_utils.py` | 显式交易日历读取和工作日计算。 |
+| `scripts/collect.py` | 固定夹具快照采集、manifest 与真实接口 TODO。 |
+| `scripts/run_daily.py` | 端到端日评编排、轮次目录和证据归档。 |
+| `scripts/check.py` | 全量测试统一入口。 |
+| `scripts/leakage_probe.py` | 未来数据扰动比较与泄露断言函数。 |
+| `scripts/package_final.py` | 包含 `.git/` 完整历史的最终 ZIP 打包与校验工具。 |
+| `hooks/audit_event.py` | Bash 后置事件的最小审计留痕 Hook。 |
+| `tests/test_calculator.py` | 指标计算和交易日历单元测试。 |
+| `tests/test_controller.py` | 控制器、问题项和断点恢复测试。 |
+| `tests/test_gates.py` | 数字、时点、身份和留出案例关卡测试。 |
+| `tests/test_evolution.py` | 演进函数及端到端证据校验。 |
+| `tests/demo_daily_run.py` | 正常、拒绝、审批、采纳与回滚证据生成入口。 |
+| `tests/demo_recovery.py` | 计算后中断与零重复计算恢复演示入口。 |
+| `examples/2026-11-11-daily-review.md` | 四模块完整正常示例日评。 |
+| `examples/2026-11-11-metrics.json` | 正常示例对应的确定性指标结果。 |
+| `examples/2026-11-11-snapshot-manifest.json` | 正常示例对应的数据快照 manifest。 |
+| `examples/2026-11-11-timing-violation.json` | 可由 `check_timing` 复现 FAIL 的时点违规样例。 |
+| `evidence/recovery-demo.md` | 断点恢复全过程与调用次数证据。 |
+| `evidence/rejection-demo.md` | 数字、时点和身份三类拒绝路径证据。 |
+| `evidence/evolution-demo.md` | 固定基线、采纳与回滚证据。 |
+| `evidence/state-snapshots/` | 各阶段及恢复案例的状态快照。 |
+| `evidence/trace/` | 关键运行的逐事件 JSONL 轨迹。 |
+| `evidence/issues/` | 问题项登记、结转、关闭及拒绝样例。 |
+| `evidence/approval-sample/` | 人工批准记录与版本或候选变化后的失效验证。 |
+| `evidence/version-registry.jsonl` | 一次采纳和一次回滚的版本历史。 |
+| `requirements.txt` | 仅标准库、无 pip 包依赖的声明。 |
+| `kimi.plugin.json` | 插件 ID、能力目录、界面信息和审计 Hook 清单。 |
+
+## 代码仓库
+
+代码仓库：https://github.com/xiashuang008/QT
+
+可从 https://github.com/xiashuang008/QT.git 克隆。
+
+仓库包含完整开发历史，最终压缩包内的 `.git/` 目录亦含完整历史，无需访问远程即可审阅全部文件与提交记录。
 
 ## 本人贡献说明
 
-待补充
+> 本节由项目负责人撰写，说明本人在任务定义、架构设计、口径与阈值确定、
+> 核验标准制定和最终审阅中的具体贡献，以及哪些环节由 Kimi Code 生成。
 
 ## AI 使用说明
 
-待补充
+- 本项目的角色卡、提示词、技能、参考文档、实现代码、测试与证据，均由 Kimi Code 依据分步指令生成。
+- 分步指令中的以下判断由项目负责人（本人）确定，不由模型决定：任务范围与四模块定义、信息截止时点（T-1 日 23:59）、点时可得性规则、验收标准与阈值、停止结果分类、修订回路轮次上限、人工批准门设计、架构拓扑与角色分工、数据来源范围与禁止使用的信息。
+- 阈值与点时规则在看到任何测试结果之前冻结于 `policies/` 目录，实现阶段一律引用该文件，不另立标准。
+- 数值一律由确定性代码计算并逐项对账，智能体不自行计算数字。
