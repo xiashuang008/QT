@@ -1,0 +1,23 @@
+{
+  "candidate_id": "daily-2026-11-11",
+  "candidate_sha256": "989d4d994c06ef7f40fa1bd142ddd9beda5738f7cf5d5214e4fb35ceab9da6aa",
+  "checks": [
+    {
+      "evidence_paths": [
+        "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\critic\\data-evidence-agent.json",
+        "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\critic\\robustness-agent.json",
+        "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\critic\\execution-agent.json",
+        "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\critic\\risk-control-agent.json"
+      ],
+      "name": "check_identity",
+      "status": "passed"
+    }
+  ],
+  "conclusion": "passed",
+  "context_id": "critic-context-1",
+  "created_at": "2026-11-11T09:00:00+08:00",
+  "round": 1,
+  "schema_version": "1.0.0",
+  "task_id": "daily-2026-11-11",
+  "unresolved_issue_ids": []
+}

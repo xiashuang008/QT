@@ -1,0 +1,10 @@
+{
+  "field_count": 13,
+  "manifest": "D:\\QT\\output\\daily-2026-11-11\\snapshots\\2026-11-11\\manifest.json",
+  "missing_fields": [
+    "NCD 收益率曲线"
+  ],
+  "role": "data-agent",
+  "self_contained": true,
+  "task_id": "daily-2026-11-11"
+}

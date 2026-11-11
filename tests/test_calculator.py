@@ -87,6 +87,28 @@ class CalculatorTests(unittest.TestCase):
         self.assertEqual(result["daily_required_amount"]["raw_value"], "120")
         self.assertEqual(result["recent5_daily_avg"]["raw_value"], "80")
 
+    def test_daily_required_amount_is_rounded_to_two_decimals(self):
+        """除法结果不得呈现 28 位有效数字，且 value 与 raw_value 必须同源。
+
+        正文数值与指标结果由关卡按 raw_value 逐位比对，
+        两者若不同源，报告里写 1868.14 就会被判为与指标结果不一致。
+        """
+        result = compute_gap_metrics(
+            field(37200),
+            field(11046),
+            field(14, unit="个工作日"),
+            field(1200),
+        )
+
+        metric = result["daily_required_amount"]
+        # 26154 / 14 = 1868.142857...，展示为 1868.14
+        self.assertEqual(metric["raw_value"], "1868.14")
+        self.assertEqual(metric["value"], 1868.14)
+        # 精度不超过两位小数
+        self.assertLessEqual(len(metric["raw_value"].split(".")[1]), 2)
+        # raw_value 与 value 数值一致
+        self.assertEqual(float(metric["raw_value"]), float(metric["value"]))
+
     def test_zero_workdays_returns_unavailable(self):
         result = compute_gap_metrics(
             field(1000),

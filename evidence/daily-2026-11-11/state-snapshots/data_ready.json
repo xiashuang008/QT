@@ -1,0 +1,30 @@
+{
+  "artifacts": [
+    {
+      "kind": "snapshot_manifest",
+      "path": "D:\\QT\\output\\daily-2026-11-11\\snapshots\\2026-11-11\\manifest.json",
+      "role": "data-agent",
+      "sha256": "67874d9c1d9d04c30b2802292c61113fe5310cea82e9926ddb56243e441f535d",
+      "verified": true
+    },
+    {
+      "kind": "data_report",
+      "path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\generator\\data-agent.json",
+      "role": "data-agent",
+      "sha256": "01483bc526f0db8d43110bc0f9afc1e50d569d48841b1b14fd91137e2d95a837",
+      "verified": true
+    }
+  ],
+  "consecutive_verification_passes": 0,
+  "pending_role": "timing-agent",
+  "request_id": "daily-2026-11-11",
+  "revision_round": 0,
+  "schema_version": "1.0.0",
+  "status": "data_ready",
+  "task_id": "daily-2026-11-11",
+  "tool_call_count": 0,
+  "total_duration_seconds": 0,
+  "unresolved_issue_ids": [],
+  "updated_at": "2026-11-11T16:49:12.061891+00:00",
+  "version": "1"
+}

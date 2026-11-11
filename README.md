@@ -9,7 +9,7 @@
 
 **免责声明：输出为研究参考，不是报价指令。**
 
-本项目是名为 `bill-daily` 的 Kimi Code 插件，面向票据交易员与交易台分析师，覆盖票据供给、缺口分析、票据利率、资金面四个日频模块。数值由确定性代码计算并逐项对账，生成方与核验方分离，发布前须经人工批准。
+本项目是名为 `bill-daily` 的智能体工作流插件，面向票据交易员与交易台分析师，覆盖票据供给、缺口分析、票据利率、资金面四个日频模块。数值由确定性代码计算并逐项对账，生成方与核验方分离，发布前须经人工批准。
 
 ## 阶段进度
 
@@ -35,7 +35,7 @@
 | `references/` | 存放工作流所需的参考资料。 |
 | `runtime/dailyflow/` | 存放日评工作流的运行时代码。 |
 | `scripts/` | 存放项目辅助脚本。 |
-| `hooks/` | 存放仅用于事件留痕的 Kimi Code 生命周期钩子。 |
+| `hooks/` | 存放仅用于事件留痕的生命周期钩子。 |
 | `tests/` | 存放项目测试代码。 |
 | `tests/fixtures/` | 存放测试使用的固定输入与夹具。 |
 | `prompts/` | 存放日评生成与核验提示词模板。 |
@@ -61,9 +61,9 @@ python -m pip install -r requirements.txt
 
 该命令无需也不会安装任何第三方包。
 
-### Kimi Code 插件安装
+### 插件安装
 
-在 Kimi Code 中执行：
+在 Kimi Code CLI 中执行：
 
 ```text
 /plugins install D:\QT
@@ -75,7 +75,7 @@ python -m pip install -r requirements.txt
 - `/bill-daily:start`：生成或恢复一个交易日的日评。
 - `/bill-daily:evo`：在固定基线上演进工作流。
 
-本项目**不需要任何 API Key**：数值计算由确定性脚本完成，智能体由 Kimi Code 调度。
+本项目**不需要任何 API Key**：数值计算由确定性脚本完成，智能体由插件调度方编排。
 
 ## 运行说明
 
@@ -155,7 +155,6 @@ python scripts/run_daily.py
 | 文件或目录 | 是什么 |
 | --- | --- |
 | `README.md` | 项目身份、环境、运行、资产、贡献与 AI 使用说明。 |
-| `AGENTS.md` | 项目目录职责约定。 |
 | `docs/01-task-charter.md` | 目标用户、任务产出、输入、验收标准、局限与持久化必要性定义。 |
 | `docs/02-architecture.md` | 唯一枢纽拓扑、角色交接、状态机、关卡、恢复与演进架构。 |
 | `docs/images/02-architecture-workflow.png` | 实际渲染的工作流拓扑图。 |
@@ -197,7 +196,7 @@ python scripts/run_daily.py
 | `scripts/check.py` | 全量测试统一入口。 |
 | `scripts/leakage_probe.py` | 未来数据扰动比较与泄露断言函数。 |
 | `scripts/package_final.py` | 包含 `.git/` 完整历史的最终 ZIP 打包与校验工具。 |
-| `hooks/audit_event.py` | Bash 后置事件的最小审计留痕 Hook。 |
+| `hooks/audit_event.py` | 命令执行后置事件的最小审计留痕钩子。 |
 | `tests/test_calculator.py` | 指标计算和交易日历单元测试。 |
 | `tests/test_controller.py` | 控制器、问题项和断点恢复测试。 |
 | `tests/test_gates.py` | 数字、时点、身份和留出案例关卡测试。 |
@@ -215,6 +214,7 @@ python scripts/run_daily.py
 | `evidence/trace/` | 关键运行的逐事件 JSONL 轨迹。 |
 | `evidence/issues/` | 问题项登记、结转、关闭及拒绝样例。 |
 | `evidence/approval-sample/` | 人工批准记录与版本或候选变化后的失效验证。 |
+| `evidence/daily-2026-11-11/` | 单次完整运行的归档留痕：三份生成方专项报告与整合后的候选日评、四份审查方专项报告与合并后的核验结论、路由决策、问题项台账与终止结果，每件产物均登记 SHA-256。 |
 | `evidence/version-registry.jsonl` | 一次采纳和一次回滚的版本历史。 |
 | `requirements.txt` | 仅标准库、无 pip 包依赖的声明。 |
 | `kimi.plugin.json` | 插件 ID、能力目录、界面信息和审计 Hook 清单。 |

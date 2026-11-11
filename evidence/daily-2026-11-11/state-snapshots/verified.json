@@ -1,0 +1,74 @@
+{
+  "artifacts": [
+    {
+      "kind": "snapshot_manifest",
+      "path": "D:\\QT\\output\\daily-2026-11-11\\snapshots\\2026-11-11\\manifest.json",
+      "role": "data-agent",
+      "sha256": "67874d9c1d9d04c30b2802292c61113fe5310cea82e9926ddb56243e441f535d",
+      "verified": true
+    },
+    {
+      "kind": "data_report",
+      "path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\generator\\data-agent.json",
+      "role": "data-agent",
+      "sha256": "01483bc526f0db8d43110bc0f9afc1e50d569d48841b1b14fd91137e2d95a837",
+      "verified": true
+    },
+    {
+      "kind": "timing_report",
+      "path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\generator\\timing-agent.json",
+      "role": "timing-agent",
+      "sha256": "74b843411dbd37f585de5b13d35c4b8309d8a51a1b835e512acaa20e8e3a015f",
+      "verified": true
+    },
+    {
+      "kind": "metrics",
+      "path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\generator\\metrics.json",
+      "role": "metrics-agent",
+      "sha256": "81104e189cf20610acee6c985fabd0db1991d858c162456d45f2629a0b14d30c",
+      "verified": true
+    },
+    {
+      "kind": "metrics_report",
+      "path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\generator\\metrics-agent.json",
+      "role": "metrics-agent",
+      "sha256": "6e4746a199a36d44d2f95c1130f144eed60cb7b89ad2e4c961bc80110b9b390b",
+      "verified": true
+    },
+    {
+      "kind": "candidate",
+      "path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\generator\\candidate.md",
+      "role": "generator-lead",
+      "sha256": "989d4d994c06ef7f40fa1bd142ddd9beda5738f7cf5d5214e4fb35ceab9da6aa",
+      "verified": true
+    },
+    {
+      "kind": "verification",
+      "path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-002\\critic\\verification.json",
+      "role": "critic-lead",
+      "sha256": "58df61f851771183be29540b9a6de93cf518977c4aa69566412f39222e076954",
+      "verified": true
+    },
+    {
+      "kind": "result",
+      "path": "D:\\QT\\output\\daily-2026-11-11\\result.json",
+      "role": "orchestrator",
+      "sha256": "dc9f29ae5e4ca274a9cd44fc2b1d3ee089f21ed004cfc2145da62bdbaea2205e",
+      "verified": true
+    }
+  ],
+  "consecutive_verification_passes": 2,
+  "pending_role": "票据交易台授权人工批准人",
+  "request_id": "daily-2026-11-11",
+  "result_path": "D:\\QT\\output\\daily-2026-11-11\\result.json",
+  "revision_round": 0,
+  "schema_version": "1.0.0",
+  "status": "verified",
+  "task_id": "daily-2026-11-11",
+  "tool_call_count": 0,
+  "total_duration_seconds": 0,
+  "unresolved_issue_ids": [],
+  "updated_at": "2026-11-11T16:49:12.474423+00:00",
+  "verification_candidate_sha256": "989d4d994c06ef7f40fa1bd142ddd9beda5738f7cf5d5214e4fb35ceab9da6aa",
+  "version": "1"
+}

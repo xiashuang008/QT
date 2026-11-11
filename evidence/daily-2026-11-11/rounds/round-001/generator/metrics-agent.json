@@ -1,0 +1,8 @@
+{
+  "calculator": "D:\\QT\\scripts\\calculator.py",
+  "metric_count": 29,
+  "metrics_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\generator\\metrics.json",
+  "role": "metrics-agent",
+  "self_contained": true,
+  "task_id": "daily-2026-11-11"
+}

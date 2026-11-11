@@ -1,0 +1,13 @@
+{
+  "candidate_sha256": "989d4d994c06ef7f40fa1bd142ddd9beda5738f7cf5d5214e4fb35ceab9da6aa",
+  "gate": {
+    "details": {},
+    "issues": [],
+    "name": "check_wording",
+    "passed": true
+  },
+  "role": "risk-control-agent",
+  "round": 2,
+  "self_contained": true,
+  "task_id": "daily-2026-11-11"
+}

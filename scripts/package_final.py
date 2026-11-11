@@ -16,7 +16,7 @@ REQUIRED_ENTRIES = (
 def should_exclude(relative_path):
     parts = relative_path.parts
     # output/ 是运行时产物；__pycache__ 与 .pyc 是编译缓存
-    # .workbuddy/ 是 AI 助手的本地记忆目录，不属于项目交付物
+    # .workbuddy/ 是本地工具的临时目录，不属于项目交付物
     excluded_dirs = ("output", "__pycache__", ".workbuddy")
     return any(part in excluded_dirs for part in parts) or relative_path.suffix == ".pyc"
 

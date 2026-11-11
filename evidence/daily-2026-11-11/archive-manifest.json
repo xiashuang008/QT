@@ -1,0 +1,171 @@
+{
+  "artifacts": [
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\issues.json",
+      "sha256": "2c58ee7e07410107cdd45d4a4cfd3aec3796bb3eff7531c8df5f61d84ddec2c0",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\issues.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\result.json",
+      "sha256": "dc9f29ae5e4ca274a9cd44fc2b1d3ee089f21ed004cfc2145da62bdbaea2205e",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\result.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-001\\critic\\data-evidence-agent.json",
+      "sha256": "0166f5ea94736bb93ac0b4158d1b3eca2ac69daa7a9e85c7484d1a56ba81cbf1",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\critic\\data-evidence-agent.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-001\\critic\\execution-agent.json",
+      "sha256": "4f820de1e2baaf1be109c2043443371a62679514cc85064bc997f381e3fa10f9",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\critic\\execution-agent.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-001\\critic\\risk-control-agent.json",
+      "sha256": "586f633f13005493babdb0d5a2abf2b09863b3d71fcad6b9232d60faf4820332",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\critic\\risk-control-agent.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-001\\critic\\robustness-agent.json",
+      "sha256": "ed8e50cbea0fe10eeae9dd25a1328f75b0608a1e9a8ef7a57c3dcf2d42632a6f",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\critic\\robustness-agent.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-001\\critic\\verification.json",
+      "sha256": "97a667a5d9909c698a3ee15f1a28b7de60e88ec331456508751d6c2ac5779075",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\critic\\verification.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-001\\decision.json",
+      "sha256": "b92bee8b38d1d38f1da15f0f05a91bc957bbb91e3a0737da0faee09ec0bb5a70",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\decision.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-001\\generator\\candidate.md",
+      "sha256": "989d4d994c06ef7f40fa1bd142ddd9beda5738f7cf5d5214e4fb35ceab9da6aa",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\generator\\candidate.md"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-001\\generator\\data-agent.json",
+      "sha256": "01483bc526f0db8d43110bc0f9afc1e50d569d48841b1b14fd91137e2d95a837",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\generator\\data-agent.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-001\\generator\\metrics-agent.json",
+      "sha256": "6e4746a199a36d44d2f95c1130f144eed60cb7b89ad2e4c961bc80110b9b390b",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\generator\\metrics-agent.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-001\\generator\\metrics.json",
+      "sha256": "81104e189cf20610acee6c985fabd0db1991d858c162456d45f2629a0b14d30c",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\generator\\metrics.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-001\\generator\\timing-agent.json",
+      "sha256": "74b843411dbd37f585de5b13d35c4b8309d8a51a1b835e512acaa20e8e3a015f",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-001\\generator\\timing-agent.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-002\\critic\\data-evidence-agent.json",
+      "sha256": "ced256041da3dc38f6faed475180555d1246ba103edfe31adb27c5ae1c600ce7",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-002\\critic\\data-evidence-agent.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-002\\critic\\execution-agent.json",
+      "sha256": "43452a98cbac5a8d17ae51418c82fbe7b9e79540873f907a4bc6d31f98a9f456",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-002\\critic\\execution-agent.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-002\\critic\\risk-control-agent.json",
+      "sha256": "2ea4ec38495d9c81ff804906dd356cbb63cd9f2965667cd459bddde80abe2163",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-002\\critic\\risk-control-agent.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-002\\critic\\robustness-agent.json",
+      "sha256": "77e52fc7e43034a714e9d035954f4d1bd8ac03dbe93e3250e6657fd4fb4d6890",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-002\\critic\\robustness-agent.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-002\\critic\\verification.json",
+      "sha256": "58df61f851771183be29540b9a6de93cf518977c4aa69566412f39222e076954",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-002\\critic\\verification.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-002\\decision.json",
+      "sha256": "b1886ac5ef319a9f8ce8fac7c19f5a6bdf6a024db60691b51365a24c65d4806e",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-002\\decision.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-002\\generator\\candidate.md",
+      "sha256": "989d4d994c06ef7f40fa1bd142ddd9beda5738f7cf5d5214e4fb35ceab9da6aa",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-002\\generator\\candidate.md"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-002\\generator\\data-agent.json",
+      "sha256": "01483bc526f0db8d43110bc0f9afc1e50d569d48841b1b14fd91137e2d95a837",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-002\\generator\\data-agent.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-002\\generator\\metrics-agent.json",
+      "sha256": "6e4746a199a36d44d2f95c1130f144eed60cb7b89ad2e4c961bc80110b9b390b",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-002\\generator\\metrics-agent.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-002\\generator\\metrics.json",
+      "sha256": "81104e189cf20610acee6c985fabd0db1991d858c162456d45f2629a0b14d30c",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-002\\generator\\metrics.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\rounds\\round-002\\generator\\timing-agent.json",
+      "sha256": "74b843411dbd37f585de5b13d35c4b8309d8a51a1b835e512acaa20e8e3a015f",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\rounds\\round-002\\generator\\timing-agent.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\snapshots\\2026-11-11\\manifest.json",
+      "sha256": "67874d9c1d9d04c30b2802292c61113fe5310cea82e9926ddb56243e441f535d",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\snapshots\\2026-11-11\\manifest.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\snapshots\\2026-11-11\\source_data.csv",
+      "sha256": "9e01acd754eaa99637dc1171e9ac41d8df164451e3b7960b974e475cdbc8c6ed",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\snapshots\\2026-11-11\\source_data.csv"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\state-snapshots\\calculated.json",
+      "sha256": "872b4f46c3cf587b08baeadc9ddcef8d5c1df364666f11cef728ab0bc23aedb5",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\state-snapshots\\calculated.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\state-snapshots\\created.json",
+      "sha256": "7ada0b8a69a7c1a2bb02451ffab0d415a01ee4857e831191adc9b8fdb73a4a4d",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\state-snapshots\\created.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\state-snapshots\\data_ready.json",
+      "sha256": "7b6b16de3c5694d9ad0de33599875b4bb8bc14a23eee037e61fcdafc2a7722ab",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\state-snapshots\\data_ready.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\state-snapshots\\drafted.json",
+      "sha256": "67cd8fee56d004e7ea16bab279b589efab0c5e224926e5c14aaec3c4da8cc022",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\state-snapshots\\drafted.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\state-snapshots\\verified.json",
+      "sha256": "3a574b11976aaa5dd272ebe7bff28245a4b0dba68cf1019ce09c5c27a097af73",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\state-snapshots\\verified.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\state.json",
+      "sha256": "3a574b11976aaa5dd272ebe7bff28245a4b0dba68cf1019ce09c5c27a097af73",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\state.json"
+    },
+    {
+      "path": "D:\\QT\\evidence\\daily-2026-11-11\\trace.jsonl",
+      "sha256": "90344c1563fc038714ef7becdec0e2a41b12f2cea4a1f430b76214ca6a3a3059",
+      "source_path": "D:\\QT\\output\\daily-2026-11-11\\trace.jsonl"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "task_id": "daily-2026-11-11"
+}

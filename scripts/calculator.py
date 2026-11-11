@@ -3,7 +3,7 @@ import copy
 import hashlib
 import json
 from datetime import datetime
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from pathlib import Path
 
 try:
@@ -202,10 +202,15 @@ def compute_gap_metrics(maturity_total, discounted, workdays_left, recent5_daily
         )
     else:
         value = (_decimal(maturity_total) - _decimal(discounted)) / workdays_value
+        # 展示精度：除法结果默认保留 28 位有效数字，直接呈现会出现
+        # 85.71428571428571428571428571 这类不可读的数值。
+        # 按业务口径保留 2 位小数，并让 value 与 raw_value 同源，
+        # 使正文数值与指标结果严格一致（关卡按 raw_value 逐位比对）。
+        rounded = value.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
         result["daily_required_amount"] = _metric(
             "日均需补量",
-            value,
-            _format_decimal(value),
+            rounded,
+            _format_decimal(rounded),
             maturity_total["unit"],
             maturity_total["data_date"],
             _latest_available_at([maturity_total, discounted, workdays_left]),
