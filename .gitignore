@@ -226,3 +226,6 @@ output/
 secrets/
 
 # evidence/、data/、docs/ 必须纳入版本控制，不得忽略。
+
+# AI 助手的本地记忆目录（不属于项目交付物）
+.workbuddy/
