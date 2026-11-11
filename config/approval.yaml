@@ -1,0 +1,62 @@
+schema_version: "1.0.0"
+gate: S5
+controller: orchestrator
+
+approver:
+  type: human
+  role: 票据交易台授权人工批准人
+  must_be_named: true
+  self_approval_by_agent_allowed: false
+
+required_record_fields:
+  - approval_id
+  - task_id
+  - approver_name
+  - approver_role
+  - version
+  - candidate_sha256
+  - approved_at
+  - expires_at
+  - conclusion
+
+conclusion:
+  allowed_values:
+    - approve
+    - reject
+  publish_requires: approve
+
+waiting:
+  action: stop_automatic_execution_and_persist_verified_candidate
+  pending_role: 票据交易台授权人工批准人
+  resume_event: valid_human_approve
+  automatic_polling_for_approval: false
+  automatic_publication: false
+
+record_paths:
+  version_registry: evidence/version-registry.jsonl
+  approval_record_directory: evidence/approvals/{task_id}/
+  approval_record: evidence/approvals/{task_id}/{version}.approval.json
+  approval_and_version_records_separate: true
+
+validation:
+  same_task_id_required: true
+  exact_version_binding_required: true
+  exact_candidate_sha256_binding_required: true
+  unexpired_at_publication_required: true
+  version_change_invalidates_approval: true
+  candidate_change_invalidates_approval: true
+
+state_transitions:
+  approved:
+    controller_only: true
+    requires: valid_human_approval_and_approval_gate_pass
+  published:
+    controller_only: true
+    requires: approved_state_and_publication_gate_pass
+  manual_state_promotion_allowed: false
+
+authorization_boundary:
+  numeric_acceptance_equals_publication_authorization:
+    $ref: policies/policy.json#/authorization_boundary/numeric_acceptance_equals_publication_authorization
+  automatic_publication_allowed:
+    $ref: policies/policy.json#/authorization_boundary/automatic_publication_allowed

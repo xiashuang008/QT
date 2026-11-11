@@ -1,0 +1,97 @@
+schema_version: "1.0.0"
+workflow: bill-daily
+controller: orchestrator
+
+policy_sources:
+  acceptance_and_limits: policies/policy.json
+  point_in_time: policies/pit_rules.json
+  task_definition: docs/01-task-charter.md
+  architecture: docs/02-architecture.md
+
+stage_order:
+  - id: S0
+    name: 数据采集
+    output_state: data_ready
+  - id: S1
+    name: 口径判定
+    output_state: data_ready
+  - id: S2
+    name: 确定性计算
+    output_state: calculated
+  - id: S3
+    name: 日评生成
+    output_state: drafted
+  - id: S4
+    name: 独立核验
+    output_state: verified
+  - id: S5
+    name: 人工批准发布
+    approval_state: approved
+    output_state: published
+    approval_config: config/approval.yaml
+  - id: S6
+    name: 持续监测
+    output_state: published
+
+routing:
+  unique_hub: orchestrator
+  generator_to_critic: Generator -> Orchestrator -> Critic
+  critic_to_generator: Critic -> Orchestrator 修复任务包 -> Generator
+  convergence_gate: 汇合前核验全部必需报告、身份与证据
+
+revision_loop:
+  route:
+    $ref: policies/policy.json#/revision_loop/route
+  max_rounds:
+    $ref: policies/policy.json#/revision_loop/max_rounds
+  round_count_scope:
+    $ref: policies/policy.json#/revision_loop/round_count_scope
+  on_limit_exceeded:
+    $ref: policies/policy.json#/revision_loop/on_limit_exceeded
+  exhaustion_is_acceptance:
+    $ref: policies/policy.json#/revision_loop/exhaustion_is_acceptance
+
+budget_limits:
+  max_tool_calls_per_case:
+    $ref: policies/policy.json#/execution_limits/max_tool_calls_per_case
+  max_total_duration_seconds_per_case:
+    $ref: policies/policy.json#/execution_limits/max_total_duration_seconds_per_case
+  tool_call_count_scope:
+    $ref: policies/policy.json#/execution_limits/tool_call_count_scope
+  duration_scope:
+    $ref: policies/policy.json#/execution_limits/duration_scope
+  on_tool_call_limit_exceeded:
+    $ref: policies/policy.json#/execution_limits/on_tool_call_limit_exceeded
+  on_duration_limit_exceeded:
+    $ref: policies/policy.json#/execution_limits/on_duration_limit_exceeded
+  exhaustion_is_acceptance:
+    $ref: policies/policy.json#/execution_limits/exhaustion_is_acceptance
+
+acceptance:
+  thresholds:
+    $ref: policies/policy.json#/acceptance_thresholds
+  field_available_at:
+    $ref: policies/pit_rules.json#/fields
+  information_cutoff:
+    $ref: policies/pit_rules.json#/information_cutoff
+
+stop_rules:
+  result_categories:
+    $ref: policies/policy.json#/stop_results
+  on_rejected: rejected
+  on_blocked: blocked
+  on_budget_exhausted: exhausted
+  on_no_verifiable_progress: stalled
+  on_user_stop: user_stopped
+  exhaustion_acceptance_passed:
+    $ref: policies/policy.json#/stop_results/exhausted/acceptance_passed
+  exhaustion_publication_allowed:
+    $ref: policies/policy.json#/stop_results/exhausted/publication_allowed
+
+publication_authorization:
+  numeric_acceptance_equals_publication_authorization:
+    $ref: policies/policy.json#/authorization_boundary/numeric_acceptance_equals_publication_authorization
+  publication_requires:
+    $ref: policies/policy.json#/authorization_boundary/publication_requires
+  automatic_publication_allowed:
+    $ref: policies/policy.json#/authorization_boundary/automatic_publication_allowed

@@ -9,6 +9,7 @@
 - `tests/`：测试代码；`tests/fixtures/` 存放测试夹具。
 - `prompts/`：提示词模板。
 - `policies/`：工作流策略与约束。
+- `config/`：工作流与人工批准门配置。
 - `docs/`：项目文档。
 - `data/raw/`：原始数据。
 - `data/snapshots/`：数据快照。
